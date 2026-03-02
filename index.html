@@ -238,6 +238,37 @@
     box-shadow: 0 4px 0 #b8860b, 0 6px 15px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.9);
   }
 
+  /* ===== CARD IMAGE ===== */
+  .card-image-container {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f5e6d3, #e8d5c4);
+    border-bottom: 3px solid #ffd700;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s ease;
+  }
+  .card-image-container:hover {
+    transform: scale(1.05);
+  }
+  .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+  .card-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    background: linear-gradient(135deg, #f0e6d2, #e8d5c4);
+  }
+
   .card-header {
     background: linear-gradient(135deg, #e52222, #cc1111);
     padding: 14px 18px;
@@ -588,9 +619,101 @@
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
 
+  /* ===== MODAL LIGHTBOX ===== */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    animation: fadeIn 0.3s ease;
+  }
+
+  .modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
+    background-color: white;
+    border-radius: 16px;
+    border: 6px solid #ffd700;
+    box-shadow: 0 0 0 4px #e52222, 0 20px 60px rgba(0,0,0,0.8);
+    overflow: hidden;
+    animation: zoomIn 0.3s ease;
+  }
+
+  @keyframes zoomIn {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .modal-image {
+    max-width: 100%;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: auto;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    background: linear-gradient(135deg, #e52222, #cc1111);
+    color: #ffd700;
+    font-size: 32px;
+    font-weight: bold;
+    border: 3px solid #ffd700;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+
+  .modal-close:hover {
+    transform: scale(1.1);
+  }
+
   @media (max-width: 480px) {
     .kids-prices { grid-template-columns: repeat(2, 1fr); }
     .price-row { flex-direction: column; align-items: flex-start; }
+    .modal-content {
+      max-width: 95%;
+      max-height: 85vh;
+      border: 4px solid #ffd700;
+    }
+    .modal-close {
+      top: -12px;
+      right: -12px;
+      width: 45px;
+      height: 45px;
+      font-size: 28px;
+    }
   }
 </style>
 </head>
@@ -632,6 +755,9 @@
 
   <!-- Super Mario Galaxy -->
   <div class="card" onclick="collectCoin()">
+    <div class="card-image-container" onclick="openModal(event, 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp')">
+      <img src="https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp" alt="Super Mario Galaxy" class="card-image" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'>🌌</div>'">
+    </div>
     <div class="card-header">
       <div class="card-icon">🌌</div>
       <h2>Super Mario Galaxy<span class="badge badge-popular">⭐ TOP</span></h2>
@@ -647,6 +773,9 @@
 
   <!-- Mario Chiken -->
   <div class="card" onclick="collectCoin()">
+    <div class="card-image-container" onclick="openModal(event, 'https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg')">
+      <img src="https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg" alt="Super Mario Chiken" class="card-image" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'>🍗</div>'">
+    </div>
     <div class="card-header blue">
       <div class="card-icon">🍗</div>
       <h2>Super Mario Chiken</h2>
@@ -661,6 +790,9 @@
 
   <!-- Mario Picante -->
   <div class="card" onclick="collectCoin()">
+    <div class="card-image-container" onclick="openModal(event, 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp')">
+      <img src="https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp" alt="Super Mario Picante" class="card-image" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'>🌶️</div>'">
+    </div>
     <div class="card-header orange">
       <div class="card-icon">🌶️</div>
       <h2>Super Mario Picante<span class="badge badge-hot">🔥 HOT</span></h2>
@@ -675,6 +807,9 @@
 
   <!-- Mario Maker -->
   <div class="card" onclick="collectCoin()">
+    <div class="card-image-container" onclick="openModal(event, 'https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg')">
+      <img src="https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg" alt="Super Mario Maker" class="card-image" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'>🍍</div>'">
+    </div>
     <div class="card-header green">
       <div class="card-icon">🍍</div>
       <h2>Super Mario Maker</h2>
@@ -690,6 +825,9 @@
 
   <!-- Mario Vegetariana -->
   <div class="card" onclick="collectCoin()">
+    <div class="card-image-container" onclick="openModal(event, 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp')">
+      <img src="https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp" alt="Super Mario Vegetariana" class="card-image" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'>🥦</div>'">
+    </div>
     <div class="card-header green">
       <div class="card-icon">🥦</div>
       <h2>Super Mario Vegetariana<span class="badge badge-veggie">🌿 VEGGIE</span></h2>
@@ -809,6 +947,14 @@
   <p>© MARIO BURGERS · COMIDA Y DIVERSIÓN</p>
 </div>
 
+<!-- Modal Lightbox -->
+<div class="modal" id="imageModal">
+  <div class="modal-content">
+    <img class="modal-image" id="modalImage" src="" alt="Imagen ampliada">
+    <div class="modal-close" onclick="closeModal()">&times;</div>
+  </div>
+</div>
+
 <!-- Toast notification -->
 <div class="toast" id="toast"></div>
 
@@ -832,6 +978,33 @@
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 3000);
   }
+
+  function openModal(e, imageSrc) {
+    e.stopPropagation();
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    modalImage.src = imageSrc;
+    modal.classList.add('show');
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('imageModal');
+    modal.classList.remove('show');
+  }
+
+  // Close modal when clicking outside the image
+  document.getElementById('imageModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeModal();
+    }
+  });
+
+  // Close modal on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  });
 
   // Animate cards on scroll
   const observer = new IntersectionObserver((entries) => {
