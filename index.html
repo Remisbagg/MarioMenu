@@ -24,6 +24,7 @@
     background: #1a8fd1;
     overflow-x: hidden;
     cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='24' font-size='24'%3E🍄%3C/text%3E%3C/svg%3E"), auto;
+    padding-bottom: 200px;
   }
 
   body::before {
@@ -378,8 +379,12 @@
     background: linear-gradient(to bottom, #1a8fd1, #0a5a8a);
     padding: 20px 0 30px;
     text-align: center;
-    position: relative;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     z-index: 10;
+    border-top: 4px solid #ffd700;
   }
   .mario-bottom p {
     font-family: 'Press Start 2P', monospace;
@@ -418,8 +423,18 @@
     height: 32px;
     background: repeating-linear-gradient(90deg, #5c4a1e 0px, #5c4a1e 32px, #7a6030 32px, #7a6030 64px);
     border-top: 4px solid #3a2a0a;
-    position: relative;
+    position: fixed;
+    bottom: 160px;
+    left: 0;
+    right: 0;
     z-index: 10;
+  }
+  .pixel-ground::before {
+    content: '';
+    position: absolute;
+    top: -8px; left: 0; right: 0;
+    height: 8px;
+    background: repeating-linear-gradient(90deg, #8a7040 0px, #8a7040 32px, #6a5025 32px, #6a5025 64px);
   }
 
   .toast {
@@ -698,6 +713,117 @@
   @media (max-width: 480px) {
     .admin-panel { width: 100%; right: -100%; }
   }
+
+  /* ===== MENU CARD (diferente a product card) ===== */
+  .menu-card {
+    background: linear-gradient(160deg, #fff9f0, #fffde7);
+    border-radius: 20px;
+    border: 4px solid #ffd700;
+    box-shadow: 0 8px 0 #b8860b, 0 12px 30px rgba(0,0,0,0.3);
+    overflow: hidden;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 0 #b8860b, 0 16px 40px rgba(0,0,0,0.4);
+  }
+
+  .menu-header {
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    padding: 18px;
+    text-align: center;
+    border-bottom: 3px solid #ffd700;
+  }
+
+  .menu-header h3 {
+    font-family: 'Press Start 2P', monospace;
+    color: #ffd700;
+    font-size: clamp(11px, 2.8vw, 16px);
+    text-shadow: 2px 2px 0 #3b0764;
+    margin-bottom: 8px;
+  }
+
+  .menu-icon {
+    font-size: 42px;
+    animation: iconBounce 2s ease-in-out infinite;
+    margin-bottom: 8px;
+  }
+
+  .menu-body {
+    padding: 18px;
+  }
+
+  .menu-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 12px 0;
+  }
+
+  .menu-item {
+    background: linear-gradient(135deg, #e52222, #cc1111);
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(12px, 3vw, 14px);
+    padding: 8px 14px;
+    border-radius: 12px;
+    border: 2px solid #ffd700;
+    box-shadow: 0 3px 0 #900;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
+  }
+
+  .menu-includes {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(13px, 3.5vw, 16px);
+    color: #2db83d;
+    text-align: center;
+    margin: 12px 0;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+  }
+
+  .menu-prices {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin: 14px 0;
+  }
+
+  .menu-price-item {
+    text-align: center;
+    background: linear-gradient(135deg, #1a8fd1, #0066aa);
+    border-radius: 12px;
+    padding: 12px 8px;
+    border: 3px solid #ffd700;
+    box-shadow: 0 4px 0 #004080;
+  }
+
+  .menu-price-item .label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(8px, 2vw, 10px);
+    color: #ffd700;
+    text-shadow: 1px 1px 0 #004080;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .menu-price-item .amount {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(11px, 2.8vw, 15px);
+    color: white;
+    text-shadow: 2px 2px 0 #004080;
+  }
+
+  .menu-note {
+    font-family: 'Fredoka One', cursive;
+    font-size: 12px;
+    color: #9a7a4a;
+    text-align: center;
+    margin-top: 12px;
+    font-style: italic;
+  }
+
 </style>
 </head>
 <body>
@@ -859,6 +985,25 @@
           combo: { precio: 9800, desc: '+Papas +Gaseosa' },
           extras: { 'Queso extra': 5000 }
         }
+      },
+      menus: {
+        m1: {
+          nombre: 'SUPER CAJITA FELIZ',
+          icon: '🎪',
+          items: [
+            { nombre: 'Mini Perro', icon: '🌭' },
+            { nombre: 'Mini Hamburguesa', icon: '🍔' },
+            { nombre: 'Nuggets', icon: '🍗' }
+          ],
+          includes: ['🍟 Papitas Fritas', '🥤 Jugo', '🎁 Muñeco'],
+          opciones: [
+            { nombre: 'MUÑECO PEQUEÑO', precio: 20000 },
+            { nombre: 'MUÑECO MEDIANO', precio: 25000 },
+            { nombre: 'MUÑECO GRANDE', precio: 38800 },
+            { nombre: 'CON CARRO', precio: 45000 }
+          ],
+          nota: 'Más opciones disponibles en vitrina'
+        }
       }
     };
     
@@ -937,6 +1082,78 @@
 
       container.appendChild(menu);
     });
+
+    // Renderizar MENÚS dinámicos
+    const menus = Object.entries(menuData.menus || {});
+    if (menus.length > 0) {
+      const menuTitle = document.createElement('div');
+      menuTitle.className = 'section-title purple';
+      menuTitle.innerHTML = '🎪 MENÚS ESPECIALES';
+      container.appendChild(menuTitle);
+
+      const menuContainer = document.createElement('div');
+      menuContainer.className = 'menu';
+
+      menus.forEach(([menuKey, menu]) => {
+        const menuCard = document.createElement('div');
+        menuCard.className = 'menu-card';
+
+        // Header
+        const header = document.createElement('div');
+        header.className = 'menu-header';
+        header.innerHTML = `
+          <div class="menu-icon">${menu.icon}</div>
+          <h3>${menu.nombre}</h3>
+        `;
+
+        // Body
+        const body = document.createElement('div');
+        body.className = 'menu-body';
+
+        // Items del menú
+        let itemsHtml = '<div class="menu-items">';
+        if (menu.items && menu.items.length > 0) {
+          menu.items.forEach(item => {
+            itemsHtml += `<div class="menu-item">${item.icon} ${item.nombre}</div>`;
+          });
+        }
+        itemsHtml += '</div>';
+
+        // Includes
+        let includesHtml = '';
+        if (menu.includes && menu.includes.length > 0) {
+          includesHtml = `<div class="menu-includes">${menu.includes.join(' + ')}</div>`;
+        }
+
+        // Precios
+        let pricesHtml = '<div class="menu-prices">';
+        if (menu.opciones && menu.opciones.length > 0) {
+          menu.opciones.forEach(opcion => {
+            pricesHtml += `
+              <div class="menu-price-item">
+                <span class="label">${opcion.nombre}</span>
+                <div class="amount">$${opcion.precio.toLocaleString()}</div>
+              </div>
+            `;
+          });
+        }
+        pricesHtml += '</div>';
+
+        // Nota
+        let noteHtml = '';
+        if (menu.nota) {
+          noteHtml = `<div class="menu-note">🪙 ${menu.nota}</div>`;
+        }
+
+        body.innerHTML = itemsHtml + includesHtml + pricesHtml + noteHtml;
+
+        menuCard.appendChild(header);
+        menuCard.appendChild(body);
+        menuContainer.appendChild(menuCard);
+      });
+
+      container.appendChild(menuContainer);
+    }
   }
 
   function updateAdminPanel() {
@@ -968,6 +1185,18 @@
         <div class="form-group"><label>¿Tiene Combo?</label><input type="number" id="comboPrice" placeholder="9800" min="0"><input type="text" id="comboDesc" placeholder="Descripción" style="margin-top:6px;"></div>
         <div class="form-group"><label>Añadidos (nombre:precio)</label><textarea id="extrasList" placeholder="Queso extra:5000&#10;Bacon:3000" rows="2"></textarea></div>
         <button class="btn-admin" onclick="addNewProduct()">✓ Agregar Producto</button>
+      </div>
+
+      <div class="admin-section">
+        <h4>🎪 CREAR MENÚ ESPECIAL</h4>
+        <div id="menusList"></div>
+        <div class="form-group"><label>Nombre del Menú</label><input type="text" id="newMenuName" placeholder="Ej: Super Cajita Feliz"></div>
+        <div class="form-group"><label>Emoji</label><div class="emoji-picker" id="menuEmojiPicker"></div><input type="text" id="newMenuEmoji" placeholder="🎪" maxlength="2" value="🎪"></div>
+        <div class="form-group"><label>Items (nombre:emoji)</label><textarea id="menuItems" placeholder="Mini Perro:🌭&#10;Mini Hamburguesa:🍔&#10;Nuggets:🍗" rows="3"></textarea></div>
+        <div class="form-group"><label>Incluye (ej: Papas+Gaseosa)</label><textarea id="menuIncludes" placeholder="Papitas Fritas:🍟&#10;Jugo:🥤&#10;Muñeco:🎁" rows="2"></textarea></div>
+        <div class="form-group"><label>Opciones de Precio</label><textarea id="menuOpciones" placeholder="Muñeco Pequeño:20000&#10;Muñeco Mediano:25000" rows="3"></textarea></div>
+        <div class="form-group"><label>Nota (opcional)</label><input type="text" id="menuNota" placeholder="Más opciones disponibles en vitrina"></div>
+        <button class="btn-admin" onclick="addNewMenu()">✓ Crear Menú</button>
       </div>
     `;
 
@@ -1094,6 +1323,22 @@
         categoryEmojiPicker.appendChild(btn);
       });
     }
+
+    const menuEmojiPicker = document.getElementById('menuEmojiPicker');
+    if (menuEmojiPicker) {
+      menuEmojiPicker.innerHTML = '';
+      emojis.forEach(emoji => {
+        const btn = document.createElement('button');
+        btn.className = 'emoji-btn';
+        btn.textContent = emoji;
+        btn.type = 'button';
+        btn.onclick = (e) => {
+          e.preventDefault();
+          document.getElementById('newMenuEmoji').value = emoji;
+        };
+        menuEmojiPicker.appendChild(btn);
+      });
+    }
   }
 
   function addCategory() {
@@ -1192,6 +1437,63 @@
       menuData.products[key].precio = parseInt(newPrice);
       db.ref('menu/products/' + key + '/precio').set(parseInt(newPrice), () => { renderMenu(); updateAdminPanel(); showToast('✅ Actualizado'); });
     }
+  }
+
+  function addNewMenu() {
+    const name = document.getElementById('newMenuName').value;
+    const emoji = document.getElementById('newMenuEmoji').value || '🎪';
+    const itemsText = document.getElementById('menuItems').value;
+    const includesText = document.getElementById('menuIncludes').value;
+    const opcionesText = document.getElementById('menuOpciones').value;
+    const nota = document.getElementById('menuNota').value;
+
+    if (!name || !itemsText || !opcionesText) return alert('Completa los campos obligatorios');
+
+    // Parsear items
+    const items = [];
+    itemsText.split('\n').forEach(line => {
+      const [nombre, icon] = line.split(':');
+      if (nombre && icon) items.push({ nombre: nombre.trim(), icon: icon.trim() });
+    });
+
+    // Parsear includes
+    const includes = [];
+    if (includesText.trim()) {
+      includesText.split('\n').forEach(line => {
+        const [nombre, icon] = line.split(':');
+        if (nombre && icon) includes.push(`${icon.trim()} ${nombre.trim()}`);
+      });
+    }
+
+    // Parsear opciones
+    const opciones = [];
+    opcionesText.split('\n').forEach(line => {
+      const [nombre, precio] = line.split(':');
+      if (nombre && precio) opciones.push({ nombre: nombre.trim(), precio: parseInt(precio) });
+    });
+
+    const key = 'm' + Date.now();
+    menuData.menus = menuData.menus || {};
+    menuData.menus[key] = {
+      nombre: name,
+      icon: emoji,
+      items: items,
+      includes: includes,
+      opciones: opciones,
+      nota: nota || null
+    };
+
+    db.ref('menu/menus/' + key).set(menuData.menus[key], () => {
+      document.getElementById('newMenuName').value = '';
+      document.getElementById('newMenuEmoji').value = '🎪';
+      document.getElementById('menuItems').value = '';
+      document.getElementById('menuIncludes').value = '';
+      document.getElementById('menuOpciones').value = '';
+      document.getElementById('menuNota').value = '';
+      renderMenu();
+      updateAdminPanel();
+      showToast('✅ Menú creado');
+    });
   }
 
   function collectCoin() {
