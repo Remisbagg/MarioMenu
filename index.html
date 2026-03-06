@@ -640,14 +640,19 @@
   <img class="header-logo" src="https://upload.wikimedia.org/wikipedia/en/a/a9/MarioNSMBUDeluxe.png" alt="Mario" onerror="this.style.display='none'">
   <div class="header-title">🍄 MARIO BURGERS</div>
   <div class="header-subtitle">SUPER MENÚ · TODO LO QUE TE OFRECEMOS</div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:16px 0;padding:0 20px;">
+    <div style="flex:1;height:4px;background:linear-gradient(90deg,transparent,#ffd700,transparent);border-radius:2px;"></div>
+    <span style="font-size:28px;animation:spin 4s linear infinite;">⭐</span>
+    <div style="flex:1;height:4px;background:linear-gradient(90deg,transparent,#ffd700,transparent);border-radius:2px;"></div>
+  </div>
 </div>
 
 <!-- MENÚ DINÁMICO -->
 <div id="menuContainer"></div>
 
-<!-- Secret Combo -->
+<!-- Secret Combo - AL FINAL -->
 <div class="mario-bottom">
-  <div class="secret-combo" id="secretCombo">
+  <div class="secret-combo" id="secretCombo" style="margin-bottom:20px;margin-top:10px;">
     <div class="combo-item" data-combo="left">🍄</div>
     <div class="combo-item" data-combo="right">🍄</div>
     <div class="combo-item" data-combo="right">🍄</div>
@@ -861,6 +866,96 @@
           imagen: 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp',
           combo: { precio: 9800, desc: '+Papas +Gaseosa' },
           extras: { 'Queso extra': 5000 }
+        },
+        h2: {
+          categoria: 'hamburguesas',
+          nombre: 'Super Mario Chiken',
+          descripcion: 'Hamburguesa de pollo apanado 145gr, pepinillos, jamón, tocineta',
+          precio: 20900,
+          icon: '🍗',
+          imagen: 'https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg',
+          combo: null,
+          extras: null
+        },
+        h3: {
+          categoria: 'hamburguesas',
+          nombre: 'Super Mario Picante',
+          descripcion: 'Carne 145gr, jalapeño, queso, tocineta, chicharrones, salsas picantes',
+          precio: 24000,
+          icon: '🌶️',
+          imagen: 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp',
+          combo: null,
+          extras: { 'Jalapeño extra': 2000 }
+        },
+        h4: {
+          categoria: 'hamburguesas',
+          nombre: 'Super Mario Maker',
+          descripcion: 'Carne 145gr, queso, pepinillos, tocineta, piña, jamón, vegetales',
+          precio: 24000,
+          icon: '🍍',
+          imagen: 'https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg',
+          combo: { precio: 9800, desc: '+Papas +Gaseosa' },
+          extras: null
+        },
+        h5: {
+          categoria: 'hamburguesas',
+          nombre: 'Super Mario Vegetariana',
+          descripcion: 'Hamburguesa de garbanzo y frijol, queso, pepinillos, vegetales',
+          precio: 19900,
+          icon: '🥦',
+          imagen: 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp',
+          combo: null,
+          extras: null
+        },
+        e1: {
+          categoria: 'entradas',
+          nombre: 'Empanadas',
+          descripcion: '6 unidades deliciosas',
+          precio: 17000,
+          icon: '🥟',
+          imagen: 'https://via.placeholder.com/300',
+          combo: null,
+          extras: null
+        },
+        e2: {
+          categoria: 'entradas',
+          nombre: 'Chorizos con Arepa',
+          descripcion: '6 unidades',
+          precio: 14000,
+          icon: '🌭',
+          imagen: 'https://via.placeholder.com/300',
+          combo: null,
+          extras: null
+        },
+        e3: {
+          categoria: 'entradas',
+          nombre: 'Chicharrón con Papa Criolla',
+          descripcion: 'Crujiente y delicioso',
+          precio: 19800,
+          icon: '🍖',
+          imagen: 'https://via.placeholder.com/300',
+          combo: null,
+          extras: null
+        },
+        e4: {
+          categoria: 'entradas',
+          nombre: 'Crema de Champiñón',
+          descripcion: 'Sopa cremosa',
+          precio: 18000,
+          icon: '🍵',
+          imagen: 'https://via.placeholder.com/300',
+          combo: null,
+          extras: null
+        },
+        e5: {
+          categoria: 'entradas',
+          nombre: 'Aros de Cebolla',
+          descripcion: '7 unidades',
+          precio: 16000,
+          icon: '🧅',
+          imagen: 'https://via.placeholder.com/300',
+          combo: null,
+          extras: null
         }
       }
     };
