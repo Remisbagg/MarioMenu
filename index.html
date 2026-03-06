@@ -715,9 +715,6 @@
     item.classList.add('active');
     setTimeout(() => item.classList.remove('active'), 300);
 
-    // Mostrar progreso (opcional)
-    console.log(`Combo: ${complexCombo.join(' → ')} (necesitas: ${complexSequence.join(' → ')})`);
-
     if (complexCombo.length > complexSequence.length) {
       complexCombo.shift();
     }
