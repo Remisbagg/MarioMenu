@@ -924,8 +924,9 @@
     body.innerHTML = `
       <div class="admin-section">
         <h4>📂 CATEGORÍAS</h4>
-        <div id="catList"></div>
+        <div id="catList" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;"></div>
         <div class="form-group"><label>Nueva Categoría</label><input type="text" id="newCatName" placeholder="Ej: Bebidas"></div>
+        <div class="form-group"><label>Emoji</label><div class="emoji-picker" id="categoryEmojiPicker"></div><input type="text" id="newCatEmoji" placeholder="🍔" maxlength="2"></div>
         <div class="form-group"><label>Color</label><div class="color-picker" id="colorPicker"></div></div>
         <button class="btn-admin" onclick="addCategory()">+ Categoría</button>
       </div>
@@ -963,9 +964,14 @@
       catSelect.appendChild(opt);
 
       const btn = document.createElement('button');
-      btn.className = 'btn-small';
-      btn.textContent = `✕ ${cat.nombre}`;
-      btn.onclick = () => {
+      btn.className = `btn-admin`;
+      btn.style.background = `linear-gradient(135deg, var(--mario-${cat.color === 'yellow' ? 'yellow' : cat.color}), var(--mario-${cat.color === 'yellow' ? 'yellow' : cat.color}))`;
+      btn.style.color = cat.color === 'yellow' ? '#333' : 'white';
+      btn.textContent = `${cat.icon} ${cat.nombre} ✕`;
+      btn.style.marginRight = '8px';
+      btn.style.marginBottom = '8px';
+      btn.onclick = (e) => {
+        e.preventDefault();
         if (confirm(`¿Eliminar ${cat.nombre}?`)) {
           delete menuData.categories[key];
           db.ref('menu/categories/' + key).remove(() => { renderMenu(); updateAdminPanel(); showToast('Categoría eliminada'); });
@@ -986,6 +992,7 @@
     const colorPicker = document.getElementById('colorPicker');
     const headerColorPicker = document.getElementById('headerColorPicker');
     const emojiPicker = document.getElementById('emojiPicker');
+    const categoryEmojiPicker = document.getElementById('categoryEmojiPicker');
 
     if (colorPicker) {
       colorPicker.innerHTML = '';
@@ -1022,19 +1029,33 @@
         emojiPicker.appendChild(btn);
       });
     }
+
+    if (categoryEmojiPicker) {
+      categoryEmojiPicker.innerHTML = '';
+      emojis.forEach(emoji => {
+        const btn = document.createElement('button');
+        btn.className = 'emoji-btn';
+        btn.textContent = emoji;
+        btn.type = 'button';
+        btn.onclick = () => document.getElementById('newCatEmoji').value = emoji;
+        categoryEmojiPicker.appendChild(btn);
+      });
+    }
   }
 
   function addCategory() {
     const name = document.getElementById('newCatName').value;
+    const emoji = document.getElementById('newCatEmoji').value || '📂';
     const color = document.getElementById('newCatColor').value || 'red';
     if (!name) return alert('Nombre requerido');
 
     const key = name.toLowerCase().replace(/\s/g, '');
     menuData.categories = menuData.categories || {};
-    menuData.categories[key] = { nombre: name.toUpperCase(), icon: '📂', color };
+    menuData.categories[key] = { nombre: name.toUpperCase(), icon: emoji, color };
 
     db.ref('menu/categories/' + key).set(menuData.categories[key], () => {
       document.getElementById('newCatName').value = '';
+      document.getElementById('newCatEmoji').value = '';
       renderMenu();
       updateAdminPanel();
       showToast('✅ Categoría creada');
