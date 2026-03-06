@@ -701,26 +701,34 @@
   let menuData = null;
   let comboSequence = [];
   const correctSequence = ['left', 'center', 'right'];
+  let comboSequence = [];
+  const correctSequence = ['left', 'center', 'right'];
   const adminPwd = atob('c3VwZXJtYXJpbzIwMjZfMTk4Mw==');
   const emojis = ['🍔', '🌭', '🍕', '🍗', '🌶️', '🧀', '🥬', '🍟', '🧅', '🥟', '🍖', '🌮', '🍍', '🥦', '🍵', '⭐'];
 
-  // Combo secreto - SOLO 3 ELEMENTOS
+  // Combo secreto - COMPLEJO: LEFT(2x) → RIGHT(3x) → CENTER(1x)
+  const complexSequence = ['left', 'left', 'right', 'right', 'right', 'center'];
+  let complexCombo = [];
+
   document.getElementById('secretCombo').addEventListener('click', (e) => {
     const item = e.target.closest('div[data-pos]');
     if (!item) return;
 
     const pos = item.getAttribute('data-pos');
-    comboSequence.push(pos);
+    complexCombo.push(pos);
     item.classList.add('active');
     setTimeout(() => item.classList.remove('active'), 300);
 
-    if (comboSequence.length > correctSequence.length) {
-      comboSequence.shift();
+    // Mostrar progreso (opcional)
+    console.log(`Combo: ${complexCombo.join(' → ')} (necesitas: ${complexSequence.join(' → ')})`);
+
+    if (complexCombo.length > complexSequence.length) {
+      complexCombo.shift();
     }
 
-    if (comboSequence.join(',') === correctSequence.join(',')) {
+    if (complexCombo.join(',') === complexSequence.join(',')) {
       openAdmin();
-      comboSequence = [];
+      complexCombo = [];
     }
   });
 
