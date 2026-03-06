@@ -130,6 +130,24 @@
     letter-spacing: 3px;
   }
 
+  .pipe-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 16px 0;
+    padding: 0 20px;
+  }
+  .pipe-divider::before, .pipe-divider::after {
+    content: '';
+    flex: 1;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #ffd700, transparent);
+    border-radius: 2px;
+  }
+  .pipe-divider span { font-size: 28px; animation: spin 4s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
   .section-title {
     font-family: 'Press Start 2P', monospace;
     font-size: clamp(12px, 3.5vw, 20px);
@@ -187,12 +205,6 @@
     box-shadow: 0 8px 0 #b8860b, 0 12px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.9);
     border: 4px solid #ffd700;
     overflow: hidden;
-    transform: translateY(20px);
-    opacity: 0;
-    animation: cardSlideIn 0.6s ease-out forwards;
-  }
-  @keyframes cardSlideIn {
-    to { transform: translateY(0); opacity: 1; }
   }
 
   .card-image-container {
@@ -247,13 +259,13 @@
     line-height: 1.7;
     font-size: clamp(12px, 3vw, 15px);
     font-weight: 700;
-    margin-bottom: 12px;
   }
 
   .price-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-top: 14px;
     gap: 12px;
     flex-wrap: wrap;
   }
@@ -348,32 +360,59 @@
     margin-top: 12px;
   }
 
-  .secret-combo {
+  .secret-combo-display {
+    font-size: 48px;
     display: flex;
     justify-content: center;
     gap: 16px;
-    margin-bottom: 16px;
     cursor: pointer;
+    margin-bottom: 20px;
   }
-  .combo-item {
-    font-size: 32px;
+  .secret-combo-display div {
     animation: bobbing 1s ease-in-out infinite;
     user-select: none;
     transition: transform 0.1s;
   }
-  .combo-item:nth-child(1) { animation-delay: 0s; }
-  .combo-item:nth-child(2) { animation-delay: 0.2s; }
-  .combo-item:nth-child(3) { animation-delay: 0.4s; }
   @keyframes bobbing {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
   }
-  .combo-item.active { animation: pulse 0.3s ease-out; }
+  .secret-combo-display div.active {
+    animation: pulse 0.3s ease-out;
+  }
   @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.3); }
     100% { transform: scale(1); }
   }
+
+  .pixel-ground {
+    height: 32px;
+    background: repeating-linear-gradient(90deg, #5c4a1e 0px, #5c4a1e 32px, #7a6030 32px, #7a6030 64px);
+    border-top: 4px solid #3a2a0a;
+    position: relative;
+    z-index: 10;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: linear-gradient(135deg, #2db83d, #1a9a28);
+    color: white;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    padding: 14px 22px;
+    border-radius: 12px;
+    border: 3px solid #ffd700;
+    box-shadow: 0 6px 0 #0a5a12, 0 10px 30px rgba(0,0,0,0.4);
+    z-index: 999;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-align: center;
+    max-width: 280px;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
 
   .modal {
     display: none;
@@ -427,26 +466,6 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.5);
   }
 
-  .toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: linear-gradient(135deg, #2db83d, #1a9a28);
-    color: white;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    padding: 14px 22px;
-    border-radius: 12px;
-    border: 3px solid #ffd700;
-    box-shadow: 0 6px 0 #0a5a12, 0 10px 30px rgba(0,0,0,0.4);
-    z-index: 999;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    text-align: center;
-    max-width: 280px;
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); }
-
   /* Admin Panel */
   .admin-panel {
     position: fixed;
@@ -461,7 +480,6 @@
     transition: right 0.3s ease;
     box-shadow: -10px 0 30px rgba(0,0,0,0.8);
   }
-
   .admin-panel.open { right: 0; }
 
   .admin-header {
@@ -473,7 +491,6 @@
     justify-content: space-between;
     align-items: center;
   }
-
   .admin-header h3 {
     font-family: 'Press Start 2P', monospace;
     font-size: 14px;
@@ -520,9 +537,7 @@
     font-family: 'Fredoka One', cursive;
   }
 
-  .form-group input,
-  .form-group textarea,
-  .form-group select {
+  .form-group input, .form-group textarea, .form-group select {
     width: 100%;
     padding: 8px;
     border: 2px solid #ffd700;
@@ -531,11 +546,6 @@
     color: #fff;
     font-family: 'Nunito', sans-serif;
     font-size: 11px;
-  }
-
-  .form-group input::placeholder,
-  .form-group textarea::placeholder {
-    color: rgba(255,255,255,0.5);
   }
 
   .emoji-picker {
@@ -602,14 +612,6 @@
     cursor: pointer;
   }
 
-  .pixel-ground {
-    height: 32px;
-    background: repeating-linear-gradient(90deg, #5c4a1e 0px, #5c4a1e 32px, #7a6030 32px, #7a6030 64px);
-    border-top: 4px solid #3a2a0a;
-    position: relative;
-    z-index: 10;
-  }
-
   @media (max-width: 480px) {
     .admin-panel { width: 100%; right: -100%; }
   }
@@ -626,7 +628,7 @@
 
 <!-- HUD -->
 <div class="mario-lives">🍄 × 3&nbsp;&nbsp;VIDAS</div>
-<div class="coin-counter" onclick="openAdmin()" title="Click para editar">🪙 × <span id="coinCount">000</span></div>
+<div class="coin-counter" onclick="openAdmin()" title="Click para admin">🪙 × <span id="coinCount">000</span></div>
 
 <!-- Scrolling clouds -->
 <div class="clouds">
@@ -640,28 +642,19 @@
   <img class="header-logo" src="https://upload.wikimedia.org/wikipedia/en/a/a9/MarioNSMBUDeluxe.png" alt="Mario" onerror="this.style.display='none'">
   <div class="header-title">🍄 MARIO BURGERS</div>
   <div class="header-subtitle">SUPER MENÚ · TODO LO QUE TE OFRECEMOS</div>
-  <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:16px 0;padding:0 20px;">
-    <div style="flex:1;height:4px;background:linear-gradient(90deg,transparent,#ffd700,transparent);border-radius:2px;"></div>
-    <span style="font-size:28px;animation:spin 4s linear infinite;">⭐</span>
-    <div style="flex:1;height:4px;background:linear-gradient(90deg,transparent,#ffd700,transparent);border-radius:2px;"></div>
-  </div>
+  <div class="pipe-divider"><span>⭐</span></div>
 </div>
 
 <!-- MENÚ DINÁMICO -->
 <div id="menuContainer"></div>
 
-<!-- Secret Combo - AL FINAL -->
+<!-- Secret Combo - AL FINAL (SOLO 3 ELEMENTOS) -->
 <div class="mario-bottom">
-  <div class="secret-combo" id="secretCombo" style="margin-bottom:20px;margin-top:10px;">
-    <div class="combo-item" data-combo="left">🍄</div>
-    <div class="combo-item" data-combo="right">🍄</div>
-    <div class="combo-item" data-combo="right">🍄</div>
-    <div class="combo-item" data-combo="right">🍄</div>
-    <div class="combo-item" data-combo="star">⭐</div>
-    <div class="combo-item" data-combo="left">🍄</div>
-    <div class="combo-item" data-combo="star">⭐</div>
+  <div class="secret-combo-display" id="secretCombo">
+    <div data-pos="left">🍄</div>
+    <div data-pos="center">⭐</div>
+    <div data-pos="right">🍄</div>
   </div>
-  <div style="font-size:48px;">🍄 ⭐ 🍄</div>
   <p>© MARIO BURGERS · COMIDA Y DIVERSIÓN</p>
 </div>
 
@@ -685,81 +678,8 @@
     <h3>⚙️ ADMIN</h3>
     <button class="close-admin" onclick="closeAdmin()">✕</button>
   </div>
-  <div class="admin-content">
-    <div id="adminBody">
-      
-      <!-- Gestionar Categorías -->
-      <div class="admin-section">
-        <h4>📂 CATEGORÍAS</h4>
-        <div id="categoriesList"></div>
-        <div class="form-group">
-          <label>Nueva Categoría</label>
-          <input type="text" id="newCatName" placeholder="Ej: Bebidas">
-        </div>
-        <div class="form-group">
-          <label>Color</label>
-          <select id="newCatColor">
-            <option value="red">🔴 Rojo</option>
-            <option value="green">🟢 Verde</option>
-            <option value="blue">🔵 Azul</option>
-            <option value="purple">🟣 Púrpura</option>
-          </select>
-        </div>
-        <button class="btn-admin" onclick="addCategory()">+ Categoría</button>
-      </div>
-
-      <!-- Editar Productos -->
-      <div class="admin-section">
-        <h4>📝 EDITAR PRODUCTOS</h4>
-        <div id="productsList"></div>
-      </div>
-
-      <!-- Nuevo Producto -->
-      <div class="admin-section">
-        <h4>➕ NUEVO PRODUCTO</h4>
-        <div class="form-group">
-          <label>Categoría</label>
-          <select id="newCatSelect"></select>
-        </div>
-        <div class="form-group">
-          <label>Nombre</label>
-          <input type="text" id="newName" placeholder="Ej: Super Mario XXL">
-        </div>
-        <div class="form-group">
-          <label>Descripción</label>
-          <textarea id="newDesc" placeholder="Ingredientes" rows="2"></textarea>
-        </div>
-        <div class="form-group">
-          <label>Precio Base</label>
-          <input type="number" id="newPrice" placeholder="25000" min="0">
-        </div>
-        <div class="form-group">
-          <label>Emoji/Ícono</label>
-          <div class="emoji-picker" id="emojiPicker"></div>
-          <input type="text" id="newIcon" placeholder="🍔" maxlength="2">
-        </div>
-        <div class="form-group">
-          <label>Imagen</label>
-          <input type="file" id="newImage" accept="image/*">
-        </div>
-
-        <!-- Combos -->
-        <div class="form-group">
-          <label>¿Tiene Combo? (Precio adicional)</label>
-          <input type="number" id="comboPrice" placeholder="9800" min="0">
-          <input type="text" id="comboDesc" placeholder="Ej: +Papas +Gaseosa" style="margin-top:6px;">
-        </div>
-
-        <!-- Añadidos -->
-        <div class="form-group">
-          <label>Añadidos Disponibles (nombre:precio)</label>
-          <textarea id="extrasList" placeholder="Queso extra:5000&#10;Bacon:3000" rows="2"></textarea>
-        </div>
-
-        <button class="btn-admin" onclick="addNewProduct()">✓ Agregar Producto</button>
-      </div>
-
-    </div>
+  <div class="admin-content" id="adminBody">
+    <div style="text-align:center;color:#ffd700;font-family:'Press Start 2P',monospace;font-size:12px;">Cargando...</div>
   </div>
 </div>
 
@@ -780,36 +700,17 @@
   let coins = 0;
   let menuData = null;
   let comboSequence = [];
-  const correctSequence = ['left', 'right', 'right', 'right', 'star', 'left', 'star'];
-  const adminPwd = atob('c3VwZXJtYXJpbzIwMjZfMTk4Mw=='); // Contraseña codificada
-
+  const correctSequence = ['left', 'center', 'right'];
+  const adminPwd = atob('c3VwZXJtYXJpbzIwMjZfMTk4Mw==');
   const emojis = ['🍔', '🌭', '🍕', '🍗', '🌶️', '🧀', '🥬', '🍟', '🧅', '🥟', '🍖', '🌮', '🍍', '🥦', '🍵', '⭐'];
 
-  // Setup emoji picker
-  function setupEmojiPicker() {
-    const picker = document.getElementById('emojiPicker');
-    picker.innerHTML = '';
-    emojis.forEach(emoji => {
-      const btn = document.createElement('button');
-      btn.className = 'emoji-btn';
-      btn.textContent = emoji;
-      btn.type = 'button';
-      btn.onclick = () => {
-        document.getElementById('newIcon').value = emoji;
-        document.querySelectorAll('.emoji-btn').forEach(b => b.style.borderColor = '#ffd700');
-        btn.style.borderColor = '#2db83d';
-      };
-      picker.appendChild(btn);
-    });
-  }
-
-  // Secret combo detection
+  // Combo secreto - SOLO 3 ELEMENTOS
   document.getElementById('secretCombo').addEventListener('click', (e) => {
-    const item = e.target.closest('.combo-item');
+    const item = e.target.closest('div[data-pos]');
     if (!item) return;
 
-    const comboType = item.getAttribute('data-combo');
-    comboSequence.push(comboType);
+    const pos = item.getAttribute('data-pos');
+    comboSequence.push(pos);
     item.classList.add('active');
     setTimeout(() => item.classList.remove('active'), 300);
 
@@ -827,7 +728,6 @@
     const pwd = prompt('🔐 Contraseña Admin:');
     if (pwd === adminPwd) {
       document.getElementById('adminPanel').classList.add('open');
-      setupEmojiPicker();
       updateAdminPanel();
     } else if (pwd !== null) {
       alert('❌ Contraseña incorrecta');
@@ -853,14 +753,13 @@
     menuData = {
       categories: {
         hamburguesas: { nombre: 'HAMBURGUESAS', icon: '🍔', color: 'red' },
-        entradas: { nombre: 'ENTRADAS', icon: '🍄', color: 'green' },
-        bebidas: { nombre: 'BEBIDAS', icon: '🥤', color: 'blue' }
+        entradas: { nombre: 'ENTRADAS', icon: '🍄', color: 'green' }
       },
       products: {
         h1: {
           categoria: 'hamburguesas',
           nombre: 'Super Mario Galaxy',
-          descripcion: 'Carne 145gr, huevo frito, jamón, queso, chorizo, papas, tocineta',
+          descripcion: 'Carne 145gr, huevo frito, jamón, queso, chorizo, papas, tocineta, vegetales',
           precio: 24800,
           icon: '🌌',
           imagen: 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp',
@@ -870,7 +769,7 @@
         h2: {
           categoria: 'hamburguesas',
           nombre: 'Super Mario Chiken',
-          descripcion: 'Hamburguesa de pollo apanado 145gr, pepinillos, jamón, tocineta',
+          descripcion: 'Pollo apanado 145gr, pepinillos, jamón, tocineta, papas, queso',
           precio: 20900,
           icon: '🍗',
           imagen: 'https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg',
@@ -880,17 +779,17 @@
         h3: {
           categoria: 'hamburguesas',
           nombre: 'Super Mario Picante',
-          descripcion: 'Carne 145gr, jalapeño, queso, tocineta, chicharrones, salsas picantes',
+          descripcion: 'Carne 145gr, jalapeño, queso, tocineta, chicharrones, salsas',
           precio: 24000,
           icon: '🌶️',
           imagen: 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp',
           combo: null,
-          extras: { 'Jalapeño extra': 2000 }
+          extras: null
         },
         h4: {
           categoria: 'hamburguesas',
           nombre: 'Super Mario Maker',
-          descripcion: 'Carne 145gr, queso, pepinillos, tocineta, piña, jamón, vegetales',
+          descripcion: 'Carne 145gr, queso, pepinillos, tocineta, piña, jamón',
           precio: 24000,
           icon: '🍍',
           imagen: 'https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg',
@@ -900,69 +799,22 @@
         h5: {
           categoria: 'hamburguesas',
           nombre: 'Super Mario Vegetariana',
-          descripcion: 'Hamburguesa de garbanzo y frijol, queso, pepinillos, vegetales',
+          descripcion: 'Garbanzo y frijol, queso, pepinillos, papas, vegetales',
           precio: 19900,
           icon: '🥦',
           imagen: 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp',
           combo: null,
           extras: null
         },
-        e1: {
-          categoria: 'entradas',
-          nombre: 'Empanadas',
-          descripcion: '6 unidades deliciosas',
-          precio: 17000,
-          icon: '🥟',
-          imagen: 'https://via.placeholder.com/300',
-          combo: null,
-          extras: null
-        },
-        e2: {
-          categoria: 'entradas',
-          nombre: 'Chorizos con Arepa',
-          descripcion: '6 unidades',
-          precio: 14000,
-          icon: '🌭',
-          imagen: 'https://via.placeholder.com/300',
-          combo: null,
-          extras: null
-        },
-        e3: {
-          categoria: 'entradas',
-          nombre: 'Chicharrón con Papa Criolla',
-          descripcion: 'Crujiente y delicioso',
-          precio: 19800,
-          icon: '🍖',
-          imagen: 'https://via.placeholder.com/300',
-          combo: null,
-          extras: null
-        },
-        e4: {
-          categoria: 'entradas',
-          nombre: 'Crema de Champiñón',
-          descripcion: 'Sopa cremosa',
-          precio: 18000,
-          icon: '🍵',
-          imagen: 'https://via.placeholder.com/300',
-          combo: null,
-          extras: null
-        },
-        e5: {
-          categoria: 'entradas',
-          nombre: 'Aros de Cebolla',
-          descripcion: '7 unidades',
-          precio: 16000,
-          icon: '🧅',
-          imagen: 'https://via.placeholder.com/300',
-          combo: null,
-          extras: null
-        }
+        e1: { categoria: 'entradas', nombre: 'Empanadas', descripcion: '6 unidades', precio: 17000, icon: '🥟', imagen: 'https://via.placeholder.com/300', combo: null, extras: null },
+        e2: { categoria: 'entradas', nombre: 'Chorizos con Arepa', descripcion: '6 unidades', precio: 14000, icon: '🌭', imagen: 'https://via.placeholder.com/300', combo: null, extras: null },
+        e3: { categoria: 'entradas', nombre: 'Chicharrón con Papa Criolla', descripcion: 'Crujiente', precio: 19800, icon: '🍖', imagen: 'https://via.placeholder.com/300', combo: null, extras: null },
+        e4: { categoria: 'entradas', nombre: 'Crema de Champiñón', descripcion: 'Sopa cremosa', precio: 18000, icon: '🍵', imagen: 'https://via.placeholder.com/300', combo: null, extras: null },
+        e5: { categoria: 'entradas', nombre: 'Aros de Cebolla', descripcion: '7 unidades', precio: 16000, icon: '🧅', imagen: 'https://via.placeholder.com/300', combo: null, extras: null }
       }
     };
     
-    db.ref('menu').set(menuData, () => {
-      renderMenu();
-    });
+    db.ref('menu').set(menuData, () => renderMenu());
   }
 
   function renderMenu() {
@@ -972,9 +824,7 @@
     container.innerHTML = '';
 
     Object.entries(menuData.categories || {}).forEach(([catKey, cat]) => {
-      const products = Object.entries(menuData.products || {})
-        .filter(([_, p]) => p.categoria === catKey);
-
+      const products = Object.entries(menuData.products || {}).filter(([_, p]) => p.categoria === catKey);
       if (products.length === 0) return;
 
       const title = document.createElement('div');
@@ -988,17 +838,12 @@
       products.forEach(([pKey, product]) => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.style.animationDelay = `${products.indexOf([pKey, product]) * 0.1}s`;
 
         const img = document.createElement('img');
         img.src = product.imagen || 'https://via.placeholder.com/300';
         img.alt = product.nombre;
         img.className = 'card-image';
-        img.style.cursor = 'pointer';
-        img.onclick = (e) => {
-          e.stopPropagation();
-          openModal(product.imagen);
-        };
+        img.onclick = (e) => { e.stopPropagation(); openModal(product.imagen); };
 
         const imgContainer = document.createElement('div');
         imgContainer.className = 'card-image-container';
@@ -1010,15 +855,10 @@
 
         const body = document.createElement('div');
         body.className = 'card-body';
-
         let html = `<p>${product.descripcion}</p>`;
         html += `<div class="price-row"><div class="price">$${product.precio.toLocaleString()}</div>`;
-
-        if (product.combo && product.combo.precio) {
-          html += `<button style="font-family:'Fredoka One',cursive;padding:10px 16px;border:none;background:linear-gradient(135deg,#2db83d,#1a9a28);color:white;font-weight:700;border-radius:12px;border:3px solid #ffd700;cursor:pointer;">🍟 Combo +$${product.combo.precio}</button>`;
-        }
+        if (product.combo) html += `<button style="font-family:'Fredoka One',cursive;padding:10px 16px;border:none;background:linear-gradient(135deg,#2db83d,#1a9a28);color:white;border-radius:12px;border:3px solid #ffd700;cursor:pointer;">🍟 Combo +$${product.combo.precio}</button>`;
         html += `</div>`;
-
         if (product.extras && Object.keys(product.extras).length > 0) {
           html += `<div class="extras-section"><strong style="color:#e52222;">Añadidos:</strong>`;
           Object.entries(product.extras).forEach(([name, price]) => {
@@ -1026,7 +866,6 @@
           });
           html += `</div>`;
         }
-
         body.innerHTML = html;
 
         card.appendChild(imgContainer);
@@ -1042,13 +881,38 @@
   }
 
   function updateAdminPanel() {
-    const catSelect = document.getElementById('newCatSelect');
-    const prodList = document.getElementById('productsList');
-    const catList = document.getElementById('categoriesList');
+    const body = document.getElementById('adminBody');
+    body.innerHTML = `
+      <div class="admin-section">
+        <h4>📂 CATEGORÍAS</h4>
+        <div id="catList"></div>
+        <div class="form-group"><label>Nueva Categoría</label><input type="text" id="newCatName" placeholder="Ej: Bebidas"></div>
+        <div class="form-group"><label>Color</label><select id="newCatColor"><option value="red">Rojo</option><option value="green">Verde</option><option value="blue">Azul</option><option value="purple">Púrpura</option></select></div>
+        <button class="btn-admin" onclick="addCategory()">+ Categoría</button>
+      </div>
 
-    catSelect.innerHTML = '';
-    prodList.innerHTML = '';
-    catList.innerHTML = '';
+      <div class="admin-section">
+        <h4>📝 EDITAR PRODUCTOS</h4>
+        <div id="prodList"></div>
+      </div>
+
+      <div class="admin-section">
+        <h4>➕ NUEVO PRODUCTO</h4>
+        <div class="form-group"><label>Categoría</label><select id="newCatSelect"></select></div>
+        <div class="form-group"><label>Nombre</label><input type="text" id="newName" placeholder="Nombre"></div>
+        <div class="form-group"><label>Descripción</label><textarea id="newDesc" placeholder="Ingredientes" rows="2"></textarea></div>
+        <div class="form-group"><label>Precio Base</label><input type="number" id="newPrice" placeholder="25000" min="0"></div>
+        <div class="form-group"><label>Emoji/Ícono</label><div class="emoji-picker" id="emojiPicker"></div><input type="text" id="newIcon" placeholder="🍔" maxlength="2"></div>
+        <div class="form-group"><label>Imagen</label><input type="file" id="newImage" accept="image/*"></div>
+        <div class="form-group"><label>¿Tiene Combo?</label><input type="number" id="comboPrice" placeholder="9800" min="0"><input type="text" id="comboDesc" placeholder="Descripción" style="margin-top:6px;"></div>
+        <div class="form-group"><label>Añadidos (nombre:precio)</label><textarea id="extrasList" placeholder="Queso extra:5000&#10;Bacon:3000" rows="2"></textarea></div>
+        <button class="btn-admin" onclick="addNewProduct()">✓ Agregar Producto</button>
+      </div>
+    `;
+
+    const catSelect = document.getElementById('newCatSelect');
+    const catList = document.getElementById('catList');
+    const prodList = document.getElementById('prodList');
 
     Object.entries(menuData.categories || {}).forEach(([key, cat]) => {
       const opt = document.createElement('option');
@@ -1059,30 +923,35 @@
       const btn = document.createElement('button');
       btn.className = 'btn-small';
       btn.textContent = `✕ ${cat.nombre}`;
-      btn.style.background = '#e52222';
       btn.onclick = () => {
-        if (confirm(`¿Eliminar categoría ${cat.nombre}?`)) {
+        if (confirm(`¿Eliminar ${cat.nombre}?`)) {
           delete menuData.categories[key];
-          db.ref('menu/categories/' + key).remove(() => {
-            renderMenu();
-            updateAdminPanel();
-            showToast('Categoría eliminada');
-          });
+          db.ref('menu/categories/' + key).remove(() => { renderMenu(); updateAdminPanel(); showToast('Categoría eliminada'); });
         }
       };
       catList.appendChild(btn);
     });
 
+    setupEmojiPicker();
+
     Object.entries(menuData.products || {}).forEach(([key, product]) => {
       const item = document.createElement('div');
       item.className = 'product-item';
-      item.innerHTML = `
-        <h5>${product.icon} ${product.nombre}</h5>
-        <p>Categoría: ${product.categoria} | Precio: $${product.precio}</p>
-        <button class="btn-small" onclick="editProduct('${key}')">✎ Editar</button>
-        <button class="btn-small" style="background:#e52222;" onclick="deleteProduct('${key}')">✕ Eliminar</button>
-      `;
+      item.innerHTML = `<h5>${product.icon} ${product.nombre}</h5><p>$${product.precio}</p><button class="btn-small" onclick="editProduct('${key}')">✎ Editar</button><button class="btn-small" style="background:#e52222;" onclick="deleteProduct('${key}')">✕ Eliminar</button>`;
       prodList.appendChild(item);
+    });
+  }
+
+  function setupEmojiPicker() {
+    const picker = document.getElementById('emojiPicker');
+    picker.innerHTML = '';
+    emojis.forEach(emoji => {
+      const btn = document.createElement('button');
+      btn.className = 'emoji-btn';
+      btn.textContent = emoji;
+      btn.type = 'button';
+      btn.onclick = () => { document.getElementById('newIcon').value = emoji; };
+      picker.appendChild(btn);
     });
   }
 
@@ -1167,11 +1036,7 @@
   function deleteProduct(key) {
     if (confirm('¿Eliminar producto?')) {
       delete menuData.products[key];
-      db.ref('menu/products/' + key).remove(() => {
-        renderMenu();
-        updateAdminPanel();
-        showToast('🗑️ Producto eliminado');
-      });
+      db.ref('menu/products/' + key).remove(() => { renderMenu(); updateAdminPanel(); showToast('🗑️ Producto eliminado'); });
     }
   }
 
@@ -1180,11 +1045,7 @@
     const newPrice = prompt('Nuevo precio:', product.precio);
     if (newPrice) {
       menuData.products[key].precio = parseInt(newPrice);
-      db.ref('menu/products/' + key + '/precio').set(parseInt(newPrice), () => {
-        renderMenu();
-        updateAdminPanel();
-        showToast('✅ Precio actualizado');
-      });
+      db.ref('menu/products/' + key + '/precio').set(parseInt(newPrice), () => { renderMenu(); updateAdminPanel(); showToast('✅ Actualizado'); });
     }
   }
 
@@ -1222,3 +1083,7 @@
     menuData = snapshot.val();
     if (menuData) renderMenu();
   });
+</script>
+
+</body>
+</html>
