@@ -926,8 +926,8 @@
         <h4>📂 CATEGORÍAS</h4>
         <div id="catList" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;"></div>
         <div class="form-group"><label>Nueva Categoría</label><input type="text" id="newCatName" placeholder="Ej: Bebidas"></div>
-        <div class="form-group"><label>Emoji</label><div class="emoji-picker" id="categoryEmojiPicker"></div><input type="text" id="newCatEmoji" placeholder="🍔" maxlength="2"></div>
-        <div class="form-group"><label>Color</label><div class="color-picker" id="colorPicker"></div></div>
+        <div class="form-group"><label>Emoji</label><div class="emoji-picker" id="categoryEmojiPicker"></div><input type="text" id="newCatEmoji" placeholder="🍔" maxlength="2" value="📂"></div>
+        <div class="form-group"><label>Color</label><div class="color-picker" id="colorPicker"></div><input type="hidden" id="newCatColor" value="red"></div>
         <button class="btn-admin" onclick="addCategory()">+ Categoría</button>
       </div>
 
@@ -1022,7 +1022,10 @@
         btn.className = `color-btn ${color}`;
         btn.textContent = color.toUpperCase();
         btn.type = 'button';
-        btn.onclick = () => document.getElementById('newCatColor').value = color;
+        btn.onclick = (e) => {
+          e.preventDefault();
+          document.getElementById('newCatColor').value = color;
+        };
         colorPicker.appendChild(btn);
       });
     }
@@ -1034,7 +1037,10 @@
         btn.className = `color-btn ${color}`;
         btn.textContent = color.toUpperCase();
         btn.type = 'button';
-        btn.onclick = () => document.getElementById('newHeaderColor').value = color;
+        btn.onclick = (e) => {
+          e.preventDefault();
+          document.getElementById('newHeaderColor').value = color;
+        };
         headerColorPicker.appendChild(btn);
       });
     }
@@ -1046,7 +1052,10 @@
         btn.className = 'emoji-btn';
         btn.textContent = emoji;
         btn.type = 'button';
-        btn.onclick = () => document.getElementById('newIcon').value = emoji;
+        btn.onclick = (e) => {
+          e.preventDefault();
+          document.getElementById('newIcon').value = emoji;
+        };
         emojiPicker.appendChild(btn);
       });
     }
@@ -1058,7 +1067,10 @@
         btn.className = 'emoji-btn';
         btn.textContent = emoji;
         btn.type = 'button';
-        btn.onclick = () => document.getElementById('newCatEmoji').value = emoji;
+        btn.onclick = (e) => {
+          e.preventDefault();
+          document.getElementById('newCatEmoji').value = emoji;
+        };
         categoryEmojiPicker.appendChild(btn);
       });
     }
