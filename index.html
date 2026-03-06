@@ -938,7 +938,7 @@
 
       <div class="admin-section">
         <h4>➕ NUEVO PRODUCTO</h4>
-        <div class="form-group"><label>Categoría</label><select id="newCatSelect"></select></div>
+        <div class="form-group"><label>Categoría</label><div id="newCatButtons" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;"></div><input type="hidden" id="newCatSelect"></div>
         <div class="form-group"><label>Nombre</label><input type="text" id="newName" placeholder="Nombre"></div>
         <div class="form-group"><label>Descripción</label><textarea id="newDesc" placeholder="Ingredientes" rows="2"></textarea></div>
         <div class="form-group"><label>Precio Base</label><input type="number" id="newPrice" placeholder="25000" min="0"></div>
@@ -956,7 +956,28 @@
     const catSelect = document.getElementById('newCatSelect');
     const catList = document.getElementById('catList');
     const prodList = document.getElementById('prodList');
+    const newCatButtons = document.getElementById('newCatButtons');
 
+    // Crear botones de categoría para nuevo producto
+    newCatButtons.innerHTML = '';
+    Object.entries(menuData.categories || {}).forEach(([key, cat]) => {
+      const btn = document.createElement('button');
+      btn.className = `btn-admin`;
+      btn.style.marginRight = '8px';
+      btn.style.marginBottom = '8px';
+      btn.type = 'button';
+      btn.textContent = `${cat.icon} ${cat.nombre}`;
+      btn.onclick = (e) => {
+        e.preventDefault();
+        catSelect.value = key;
+        // Visual feedback
+        document.querySelectorAll('#newCatButtons button').forEach(b => b.style.opacity = '0.6');
+        btn.style.opacity = '1';
+      };
+      newCatButtons.appendChild(btn);
+    });
+
+    // Botones de categoría para eliminar
     Object.entries(menuData.categories || {}).forEach(([key, cat]) => {
       const opt = document.createElement('option');
       opt.value = key;
