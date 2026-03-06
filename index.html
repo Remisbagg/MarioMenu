@@ -15,8 +15,6 @@
     --mario-green: #2db83d;
     --mario-dark: #1a0a00;
     --mario-brown: #a0522d;
-    --cloud-white: #f0f8ff;
-    --coin-gold: #ffb300;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -157,33 +155,31 @@
     border-radius: 16px;
     position: relative;
     z-index: 10;
+    border: 4px solid #ffd700;
+    box-shadow: 0 6px 0 rgba(0,0,0,0.3);
   }
   .section-title.red {
     background: linear-gradient(135deg, #e52222, #ff5555);
     color: #ffd700;
     text-shadow: 3px 3px 0 #900;
-    border: 4px solid #ffd700;
     box-shadow: 0 6px 0 #900, 0 8px 20px rgba(0,0,0,0.3);
   }
   .section-title.green {
     background: linear-gradient(135deg, #2db83d, #44cc55);
     color: white;
     text-shadow: 3px 3px 0 #0a5a12;
-    border: 4px solid #ffd700;
     box-shadow: 0 6px 0 #0a5a12, 0 8px 20px rgba(0,0,0,0.3);
   }
   .section-title.blue {
     background: linear-gradient(135deg, #1a8fd1, #0066aa);
     color: #ffd700;
     text-shadow: 3px 3px 0 #004080;
-    border: 4px solid #ffd700;
     box-shadow: 0 6px 0 #004080, 0 8px 20px rgba(0,0,0,0.3);
   }
   .section-title.purple {
     background: linear-gradient(135deg, #7c3aed, #a855f7);
     color: #ffd700;
     text-shadow: 3px 3px 0 #3b0764;
-    border: 4px solid #ffd700;
     box-shadow: 0 6px 0 #3b0764, 0 8px 20px rgba(0,0,0,0.3);
   }
 
@@ -214,7 +210,13 @@
     background: linear-gradient(135deg, #f5e6d3, #e8d5c4);
     border-bottom: 3px solid #ffd700;
     cursor: pointer;
+    display: none;
   }
+
+  .card-image-container.has-image {
+    display: block;
+  }
+
   .card-image {
     width: 100%;
     height: 100%;
@@ -232,10 +234,13 @@
     gap: 12px;
     border-bottom: 3px solid #ffd700;
   }
+
+  .card-header.red { background: linear-gradient(135deg, #e52222, #cc1111); }
   .card-header.blue { background: linear-gradient(135deg, #1a8fd1, #0066aa); }
   .card-header.green { background: linear-gradient(135deg, #2db83d, #1a9a28); }
   .card-header.purple { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
   .card-header.orange { background: linear-gradient(135deg, #ea580c, #c2410c); }
+  .card-header.yellow { background: linear-gradient(135deg, #ffd700, #ffed4e); color: #333 !important; }
 
   .card-icon {
     font-size: 36px;
@@ -259,13 +264,13 @@
     line-height: 1.7;
     font-size: clamp(12px, 3vw, 15px);
     font-weight: 700;
+    margin-bottom: 12px;
   }
 
   .price-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 14px;
     gap: 12px;
     flex-wrap: wrap;
   }
@@ -282,6 +287,27 @@
     text-shadow: 2px 2px 0 #900;
     white-space: nowrap;
   }
+
+  .btn-combo {
+    font-family: 'Fredoka One', cursive;
+    padding: 10px 16px;
+    border: none;
+    background: linear-gradient(135deg, #2db83d, #1a9a28);
+    color: white;
+    font-weight: 700;
+    font-size: clamp(12px, 3vw, 16px);
+    border-radius: 12px;
+    cursor: pointer;
+    border: 3px solid #ffd700;
+    box-shadow: 0 4px 0 #0a5a12;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
+    transition: all 0.15s ease;
+  }
+  .btn-combo:hover, .btn-combo:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #0a5a12;
+  }
+  .btn-combo::before { content: '🍟 '; }
 
   .extras-section {
     margin-top: 12px;
@@ -326,24 +352,6 @@
     color: white;
     z-index: 100;
     box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  }
-
-  .footer-block {
-    background: linear-gradient(135deg, #e52222, #cc1111);
-    margin: 20px 16px;
-    border-radius: 16px;
-    padding: 18px;
-    text-align: center;
-    border: 4px solid #ffd700;
-    box-shadow: 0 6px 0 #900, 0 10px 25px rgba(0,0,0,0.3);
-    position: relative;
-    z-index: 10;
-  }
-  .footer-block p {
-    font-family: 'Fredoka One', cursive;
-    font-size: clamp(14px, 4vw, 22px);
-    color: white;
-    text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
   }
 
   .mario-bottom {
@@ -467,6 +475,19 @@
   }
 
   /* Admin Panel */
+  .admin-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 150;
+  }
+
+  .admin-overlay.show { display: block; }
+
   .admin-panel {
     position: fixed;
     right: -400px;
@@ -480,6 +501,7 @@
     transition: right 0.3s ease;
     box-shadow: -10px 0 30px rgba(0,0,0,0.8);
   }
+
   .admin-panel.open { right: 0; }
 
   .admin-header {
@@ -490,7 +512,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 201;
   }
+
   .admin-header h3 {
     font-family: 'Press Start 2P', monospace;
     font-size: 14px;
@@ -522,6 +548,7 @@
     font-family: 'Press Start 2P', monospace;
     font-size: 11px;
     margin-bottom: 12px;
+    text-transform: uppercase;
   }
 
   .form-group {
@@ -548,6 +575,10 @@
     font-size: 11px;
   }
 
+  .form-group input::placeholder, .form-group textarea::placeholder {
+    color: rgba(255,255,255,0.5);
+  }
+
   .emoji-picker {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -570,6 +601,35 @@
     transform: scale(1.1);
   }
 
+  .color-picker {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .color-btn {
+    padding: 10px;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    color: white;
+    font-weight: 700;
+    transition: all 0.2s;
+  }
+
+  .color-btn:hover {
+    transform: scale(1.05);
+  }
+
+  .color-btn.red { background: linear-gradient(135deg, #e52222, #cc1111); border-color: #ffd700; }
+  .color-btn.blue { background: linear-gradient(135deg, #1a8fd1, #0066aa); border-color: #ffd700; }
+  .color-btn.green { background: linear-gradient(135deg, #2db83d, #1a9a28); border-color: #ffd700; }
+  .color-btn.purple { background: linear-gradient(135deg, #7c3aed, #5b21b6); border-color: #ffd700; }
+  .color-btn.orange { background: linear-gradient(135deg, #ea580c, #c2410c); border-color: #ffd700; }
+  .color-btn.yellow { background: linear-gradient(135deg, #ffd700, #ffed4e); color: #333; border-color: #333; }
+
   .btn-admin {
     width: 100%;
     padding: 12px;
@@ -581,10 +641,13 @@
     font-family: 'Fredoka One', cursive;
     cursor: pointer;
     font-size: 11px;
+    text-transform: uppercase;
+    transition: all 0.2s;
   }
 
   .btn-admin:hover {
     background: linear-gradient(135deg, #1a9a28, #0d7a1a);
+    transform: translateY(-2px);
   }
 
   .product-item {
@@ -648,7 +711,7 @@
 <!-- MENÚ DINÁMICO -->
 <div id="menuContainer"></div>
 
-<!-- Secret Combo - AL FINAL (SOLO 3 ELEMENTOS) -->
+<!-- Secret Combo - AL FINAL -->
 <div class="mario-bottom">
   <div class="secret-combo-display" id="secretCombo">
     <div data-pos="left">🍄</div>
@@ -671,6 +734,9 @@
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
+
+<!-- Admin Overlay (para cerrar al clickear afuera) -->
+<div class="admin-overlay" id="adminOverlay"></div>
 
 <!-- Admin Panel -->
 <div class="admin-panel" id="adminPanel">
@@ -701,11 +767,11 @@
   let menuData = null;
   const adminPwd = atob('c3VwZXJtYXJpbzIwMjZfMTk4Mw==');
   const emojis = ['🍔', '🌭', '🍕', '🍗', '🌶️', '🧀', '🥬', '🍟', '🧅', '🥟', '🍖', '🌮', '🍍', '🥦', '🍵', '⭐'];
-
-  // Combo secreto - COMPLEJO: LEFT(2x) → RIGHT(3x) → CENTER(1x)
+  const colors = ['red', 'blue', 'green', 'purple', 'orange', 'yellow'];
   const complexSequence = ['left', 'left', 'right', 'right', 'right', 'center'];
   let complexCombo = [];
 
+  // Combo secreto
   document.getElementById('secretCombo').addEventListener('click', (e) => {
     const item = e.target.closest('div[data-pos]');
     if (!item) return;
@@ -729,6 +795,7 @@
     const pwd = prompt('🔐 Contraseña Admin:');
     if (pwd === adminPwd) {
       document.getElementById('adminPanel').classList.add('open');
+      document.getElementById('adminOverlay').classList.add('show');
       updateAdminPanel();
     } else if (pwd !== null) {
       alert('❌ Contraseña incorrecta');
@@ -737,7 +804,11 @@
 
   function closeAdmin() {
     document.getElementById('adminPanel').classList.remove('open');
+    document.getElementById('adminOverlay').classList.remove('show');
   }
+
+  // Cerrar al clickear en overlay
+  document.getElementById('adminOverlay').addEventListener('click', closeAdmin);
 
   function loadMenu() {
     db.ref('menu').once('value', (snapshot) => {
@@ -764,54 +835,10 @@
           precio: 24800,
           icon: '🌌',
           imagen: 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp',
+          headerColor: 'red',
           combo: { precio: 9800, desc: '+Papas +Gaseosa' },
           extras: { 'Queso extra': 5000 }
-        },
-        h2: {
-          categoria: 'hamburguesas',
-          nombre: 'Super Mario Chiken',
-          descripcion: 'Pollo apanado 145gr, pepinillos, jamón, tocineta, papas, queso',
-          precio: 20900,
-          icon: '🍗',
-          imagen: 'https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg',
-          combo: null,
-          extras: null
-        },
-        h3: {
-          categoria: 'hamburguesas',
-          nombre: 'Super Mario Picante',
-          descripcion: 'Carne 145gr, jalapeño, queso, tocineta, chicharrones, salsas',
-          precio: 24000,
-          icon: '🌶️',
-          imagen: 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp',
-          combo: null,
-          extras: null
-        },
-        h4: {
-          categoria: 'hamburguesas',
-          nombre: 'Super Mario Maker',
-          descripcion: 'Carne 145gr, queso, pepinillos, tocineta, piña, jamón',
-          precio: 24000,
-          icon: '🍍',
-          imagen: 'https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg',
-          combo: { precio: 9800, desc: '+Papas +Gaseosa' },
-          extras: null
-        },
-        h5: {
-          categoria: 'hamburguesas',
-          nombre: 'Super Mario Vegetariana',
-          descripcion: 'Garbanzo y frijol, queso, pepinillos, papas, vegetales',
-          precio: 19900,
-          icon: '🥦',
-          imagen: 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp',
-          combo: null,
-          extras: null
-        },
-        e1: { categoria: 'entradas', nombre: 'Empanadas', descripcion: '6 unidades', precio: 17000, icon: '🥟', imagen: 'https://via.placeholder.com/300', combo: null, extras: null },
-        e2: { categoria: 'entradas', nombre: 'Chorizos con Arepa', descripcion: '6 unidades', precio: 14000, icon: '🌭', imagen: 'https://via.placeholder.com/300', combo: null, extras: null },
-        e3: { categoria: 'entradas', nombre: 'Chicharrón con Papa Criolla', descripcion: 'Crujiente', precio: 19800, icon: '🍖', imagen: 'https://via.placeholder.com/300', combo: null, extras: null },
-        e4: { categoria: 'entradas', nombre: 'Crema de Champiñón', descripcion: 'Sopa cremosa', precio: 18000, icon: '🍵', imagen: 'https://via.placeholder.com/300', combo: null, extras: null },
-        e5: { categoria: 'entradas', nombre: 'Aros de Cebolla', descripcion: '7 unidades', precio: 16000, icon: '🧅', imagen: 'https://via.placeholder.com/300', combo: null, extras: null }
+        }
       }
     };
     
@@ -840,26 +867,37 @@
         const card = document.createElement('div');
         card.className = 'card';
 
-        const img = document.createElement('img');
-        img.src = product.imagen || 'https://via.placeholder.com/300';
-        img.alt = product.nombre;
-        img.className = 'card-image';
-        img.onclick = (e) => { e.stopPropagation(); openModal(product.imagen); };
+        // Imagen (solo si existe)
+        if (product.imagen) {
+          const img = document.createElement('img');
+          img.src = product.imagen;
+          img.alt = product.nombre;
+          img.className = 'card-image';
+          img.onclick = (e) => { e.stopPropagation(); openModal(product.imagen); };
 
-        const imgContainer = document.createElement('div');
-        imgContainer.className = 'card-image-container';
-        imgContainer.appendChild(img);
+          const imgContainer = document.createElement('div');
+          imgContainer.className = 'card-image-container has-image';
+          imgContainer.appendChild(img);
+          card.appendChild(imgContainer);
+        }
 
+        // Header
         const header = document.createElement('div');
-        header.className = `card-header ${cat.color}`;
+        header.className = `card-header ${product.headerColor || cat.color}`;
         header.innerHTML = `<div class="card-icon">${product.icon}</div><h2>${product.nombre}</h2>`;
 
+        // Body
         const body = document.createElement('div');
         body.className = 'card-body';
         let html = `<p>${product.descripcion}</p>`;
         html += `<div class="price-row"><div class="price">$${product.precio.toLocaleString()}</div>`;
-        if (product.combo) html += `<button style="font-family:'Fredoka One',cursive;padding:10px 16px;border:none;background:linear-gradient(135deg,#2db83d,#1a9a28);color:white;border-radius:12px;border:3px solid #ffd700;cursor:pointer;">🍟 Combo +$${product.combo.precio}</button>`;
+        
+        if (product.combo) {
+          html += `<button class="btn-combo" onclick="showCombo(event, '${product.nombre}', '${product.combo.desc}', ${product.combo.precio})"></button>`;
+        }
+        
         html += `</div>`;
+
         if (product.extras && Object.keys(product.extras).length > 0) {
           html += `<div class="extras-section"><strong style="color:#e52222;">Añadidos:</strong>`;
           Object.entries(product.extras).forEach(([name, price]) => {
@@ -867,9 +905,9 @@
           });
           html += `</div>`;
         }
+
         body.innerHTML = html;
 
-        card.appendChild(imgContainer);
         card.appendChild(header);
         card.appendChild(body);
         card.onclick = () => collectCoin();
@@ -888,7 +926,7 @@
         <h4>📂 CATEGORÍAS</h4>
         <div id="catList"></div>
         <div class="form-group"><label>Nueva Categoría</label><input type="text" id="newCatName" placeholder="Ej: Bebidas"></div>
-        <div class="form-group"><label>Color</label><select id="newCatColor"><option value="red">Rojo</option><option value="green">Verde</option><option value="blue">Azul</option><option value="purple">Púrpura</option></select></div>
+        <div class="form-group"><label>Color</label><div class="color-picker" id="colorPicker"></div></div>
         <button class="btn-admin" onclick="addCategory()">+ Categoría</button>
       </div>
 
@@ -904,12 +942,15 @@
         <div class="form-group"><label>Descripción</label><textarea id="newDesc" placeholder="Ingredientes" rows="2"></textarea></div>
         <div class="form-group"><label>Precio Base</label><input type="number" id="newPrice" placeholder="25000" min="0"></div>
         <div class="form-group"><label>Emoji/Ícono</label><div class="emoji-picker" id="emojiPicker"></div><input type="text" id="newIcon" placeholder="🍔" maxlength="2"></div>
+        <div class="form-group"><label>Color Header</label><div class="color-picker" id="headerColorPicker"></div><input type="hidden" id="newHeaderColor" value="red"></div>
         <div class="form-group"><label>Imagen</label><input type="file" id="newImage" accept="image/*"></div>
         <div class="form-group"><label>¿Tiene Combo?</label><input type="number" id="comboPrice" placeholder="9800" min="0"><input type="text" id="comboDesc" placeholder="Descripción" style="margin-top:6px;"></div>
         <div class="form-group"><label>Añadidos (nombre:precio)</label><textarea id="extrasList" placeholder="Queso extra:5000&#10;Bacon:3000" rows="2"></textarea></div>
         <button class="btn-admin" onclick="addNewProduct()">✓ Agregar Producto</button>
       </div>
     `;
+
+    setupPickers();
 
     const catSelect = document.getElementById('newCatSelect');
     const catList = document.getElementById('catList');
@@ -933,8 +974,6 @@
       catList.appendChild(btn);
     });
 
-    setupEmojiPicker();
-
     Object.entries(menuData.products || {}).forEach(([key, product]) => {
       const item = document.createElement('div');
       item.className = 'product-item';
@@ -943,22 +982,51 @@
     });
   }
 
-  function setupEmojiPicker() {
-    const picker = document.getElementById('emojiPicker');
-    picker.innerHTML = '';
-    emojis.forEach(emoji => {
-      const btn = document.createElement('button');
-      btn.className = 'emoji-btn';
-      btn.textContent = emoji;
-      btn.type = 'button';
-      btn.onclick = () => { document.getElementById('newIcon').value = emoji; };
-      picker.appendChild(btn);
-    });
+  function setupPickers() {
+    const colorPicker = document.getElementById('colorPicker');
+    const headerColorPicker = document.getElementById('headerColorPicker');
+    const emojiPicker = document.getElementById('emojiPicker');
+
+    if (colorPicker) {
+      colorPicker.innerHTML = '';
+      colors.forEach(color => {
+        const btn = document.createElement('button');
+        btn.className = `color-btn ${color}`;
+        btn.textContent = color.toUpperCase();
+        btn.type = 'button';
+        btn.onclick = () => document.getElementById('newCatColor').value = color;
+        colorPicker.appendChild(btn);
+      });
+    }
+
+    if (headerColorPicker) {
+      headerColorPicker.innerHTML = '';
+      colors.forEach(color => {
+        const btn = document.createElement('button');
+        btn.className = `color-btn ${color}`;
+        btn.textContent = color.toUpperCase();
+        btn.type = 'button';
+        btn.onclick = () => document.getElementById('newHeaderColor').value = color;
+        headerColorPicker.appendChild(btn);
+      });
+    }
+
+    if (emojiPicker) {
+      emojiPicker.innerHTML = '';
+      emojis.forEach(emoji => {
+        const btn = document.createElement('button');
+        btn.className = 'emoji-btn';
+        btn.textContent = emoji;
+        btn.type = 'button';
+        btn.onclick = () => document.getElementById('newIcon').value = emoji;
+        emojiPicker.appendChild(btn);
+      });
+    }
   }
 
   function addCategory() {
     const name = document.getElementById('newCatName').value;
-    const color = document.getElementById('newCatColor').value;
+    const color = document.getElementById('newCatColor').value || 'red';
     if (!name) return alert('Nombre requerido');
 
     const key = name.toLowerCase().replace(/\s/g, '');
@@ -979,6 +1047,7 @@
     const desc = document.getElementById('newDesc').value;
     const price = document.getElementById('newPrice').value;
     const icon = document.getElementById('newIcon').value || '🍔';
+    const headerColor = document.getElementById('newHeaderColor').value || 'red';
     const imageFile = document.getElementById('newImage').files[0];
     const comboP = document.getElementById('comboPrice').value;
     const comboD = document.getElementById('comboDesc').value;
@@ -1002,7 +1071,8 @@
         descripcion: desc,
         precio: parseInt(price),
         icon: icon,
-        imagen: imageUrl || 'https://via.placeholder.com/300',
+        headerColor: headerColor,
+        imagen: imageUrl || null,
         combo: comboP ? { precio: parseInt(comboP), desc: comboD } : null,
         extras: Object.keys(extras).length > 0 ? extras : null
       };
@@ -1055,6 +1125,16 @@
     document.getElementById('coinCount').textContent = String(coins).padStart(3, '0');
   }
 
+  function showCombo(e, nombre, desc, precio) {
+    e.stopPropagation();
+    coins += 5;
+    document.getElementById('coinCount').textContent = String(coins).padStart(3, '0');
+    const toast = document.getElementById('toast');
+    toast.innerHTML = `🍟 ${desc}<br>+$${precio}`;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
   function openModal(src) {
     document.getElementById('modalImage').src = src;
     document.getElementById('imageModal').classList.add('show');
@@ -1076,7 +1156,10 @@
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Escape') {
+      closeModal();
+      closeAdmin();
+    }
   });
 
   loadMenu();
