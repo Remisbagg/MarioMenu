@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🍄 Super Mario Burgers - Menú</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
 <style>
   :root {
     --mario-red: #e52222;
@@ -383,124 +385,6 @@
   .badge-popular { background: #ffd700; color: #333; }
   .badge-veggie { background: #2db83d; color: white; }
 
-  /* ===== ENTRADAS CARDS ===== */
-  .entrada-card {
-    background: linear-gradient(160deg, #fff9f0, #fffde7);
-    border-radius: 16px;
-    padding: 16px;
-    border: 3px solid #ffd700;
-    box-shadow: 0 6px 0 #b8860b, 0 10px 25px rgba(0,0,0,0.25);
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    transition: transform 0.15s ease;
-  }
-  .entrada-card:active { transform: scale(0.98); }
-
-  .entrada-emoji {
-    font-size: 42px;
-    flex-shrink: 0;
-    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
-  }
-
-  .entrada-info { flex: 1; }
-  .entrada-info h3 {
-    font-family: 'Fredoka One', cursive;
-    font-size: clamp(15px, 4vw, 20px);
-    color: #2d1a0a;
-    text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
-  }
-  .entrada-price {
-    font-family: 'Press Start 2P', monospace;
-    font-size: clamp(10px, 2.5vw, 14px);
-    color: #e52222;
-    text-shadow: 1px 1px 0 #900;
-    margin-top: 4px;
-  }
-  .entrada-detail {
-    font-size: 12px;
-    color: #7a5a3a;
-    font-weight: 700;
-    margin-top: 2px;
-  }
-
-  /* ===== KIDS MENU ===== */
-  .kids-card {
-    background: linear-gradient(160deg, #fff0f8, #fff9f0);
-    border-radius: 20px;
-    border: 4px solid #ffd700;
-    box-shadow: 0 8px 0 #b8860b, 0 12px 30px rgba(0,0,0,0.3);
-    overflow: hidden;
-  }
-  .kids-header {
-    background: linear-gradient(135deg, #7c3aed, #a855f7);
-    padding: 16px 18px;
-    text-align: center;
-    border-bottom: 3px solid #ffd700;
-  }
-  .kids-header h2 {
-    font-family: 'Press Start 2P', monospace;
-    color: #ffd700;
-    font-size: clamp(9px, 2.5vw, 14px);
-    text-shadow: 2px 2px 0 #3b0764;
-    line-height: 1.7;
-  }
-  .kids-body { padding: 18px; }
-  .kids-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 12px 0;
-  }
-  .kids-option {
-    background: linear-gradient(135deg, #e52222, #cc1111);
-    color: white;
-    font-family: 'Fredoka One', cursive;
-    font-size: clamp(12px, 3.5vw, 16px);
-    padding: 8px 14px;
-    border-radius: 12px;
-    border: 2px solid #ffd700;
-    box-shadow: 0 3px 0 #900;
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
-  }
-  .kids-includes {
-    font-family: 'Fredoka One', cursive;
-    font-size: clamp(13px, 3.5vw, 17px);
-    color: #2db83d;
-    text-align: center;
-    margin: 12px 0;
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
-  }
-  .kids-prices {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 12px;
-    margin-top: 14px;
-  }
-  .kids-price-item {
-    text-align: center;
-    background: linear-gradient(135deg, #1a8fd1, #0066aa);
-    border-radius: 12px;
-    padding: 12px 8px;
-    border: 3px solid #ffd700;
-    box-shadow: 0 4px 0 #004080, 0 6px 15px rgba(0,0,0,0.2);
-  }
-  .kids-price-item .label {
-    font-family: 'Press Start 2P', monospace;
-    font-size: clamp(7px, 2vw, 10px);
-    color: #ffd700;
-    text-shadow: 1px 1px 0 #004080;
-    line-height: 1.6;
-    display: block;
-    margin-bottom: 6px;
-  }
-  .kids-price-item .amount {
-    font-family: 'Press Start 2P', monospace;
-    font-size: clamp(10px, 2.5vw, 14px);
-    color: white;
-    text-shadow: 2px 2px 0 #004080;
-  }
-
   /* ===== FOOTER ===== */
   .footer-block {
     background: linear-gradient(135deg, #e52222, #cc1111);
@@ -580,6 +464,7 @@
     color: #ffd700;
     z-index: 100;
     box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    cursor: pointer;
   }
 
   /* ===== MARIO LIVES ===== */
@@ -699,20 +584,192 @@
     transform: scale(1.1);
   }
 
+  /* ===== ADMIN PANEL ===== */
+  .admin-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.8);
+    border: 3px solid #ffd700;
+    color: #ffd700;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+  }
+  .admin-toggle:hover { transform: scale(1.1); }
+
+  .admin-panel {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 380px;
+    height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border-left: 4px solid #ffd700;
+    z-index: 200;
+    overflow-y: auto;
+    transition: right 0.3s ease;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+  }
+
+  .admin-panel.open { right: 0; }
+
+  .admin-header {
+    background: linear-gradient(135deg, #e52222, #cc1111);
+    padding: 20px;
+    color: #ffd700;
+    border-bottom: 3px solid #ffd700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .admin-header h3 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .close-admin {
+    background: none;
+    border: none;
+    color: #ffd700;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .admin-content {
+    padding: 20px;
+  }
+
+  .admin-section {
+    margin-bottom: 24px;
+    background: rgba(255,255,255,0.05);
+    padding: 16px;
+    border-radius: 8px;
+    border: 2px solid #ffd700;
+  }
+
+  .admin-section h4 {
+    color: #ffd700;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+  .form-group label {
+    display: block;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    font-family: 'Fredoka One', cursive;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #ffd700;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: rgba(255,255,255,0.5);
+  }
+
+  .btn-admin {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #2db83d, #1a9a28);
+    color: white;
+    border: 2px solid #ffd700;
+    border-radius: 8px;
+    font-weight: 700;
+    font-family: 'Fredoka One', cursive;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s;
+  }
+
+  .btn-admin:hover {
+    background: linear-gradient(135deg, #1a9a28, #0d7a1a);
+    transform: translateY(-2px);
+  }
+
+  .btn-danger {
+    background: linear-gradient(135deg, #e52222, #cc1111) !important;
+    margin-top: 8px;
+  }
+
+  .btn-danger:hover {
+    background: linear-gradient(135deg, #cc1111, #bb0000) !important;
+  }
+
+  .product-item {
+    background: rgba(0,0,0,0.3);
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    border-left: 3px solid #ffd700;
+  }
+
+  .product-item h5 {
+    color: #ffd700;
+    margin: 0 0 6px 0;
+    font-size: 12px;
+  }
+
+  .product-item p {
+    color: #ccc;
+    margin: 4px 0;
+    font-size: 11px;
+  }
+
+  .btn-small {
+    padding: 6px 12px;
+    font-size: 10px;
+    margin-right: 6px;
+    background: #e52222;
+    color: white;
+    border: 1px solid #ffd700;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .loading {
+    text-align: center;
+    color: #ffd700;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    padding: 20px;
+  }
+
   @media (max-width: 480px) {
-    .kids-prices { grid-template-columns: repeat(2, 1fr); }
-    .price-row { flex-direction: column; align-items: flex-start; }
-    .modal-content {
-      max-width: 95%;
-      max-height: 85vh;
-      border: 4px solid #ffd700;
+    .admin-panel {
+      width: 100%;
+      right: -100%;
     }
-    .modal-close {
-      top: -12px;
-      right: -12px;
-      width: 45px;
-      height: 45px;
-      font-size: 28px;
+    .admin-toggle {
+      display: none;
     }
   }
 </style>
@@ -728,7 +785,7 @@
 
 <!-- HUD -->
 <div class="mario-lives">🍄 × 3&nbsp;&nbsp;VIDAS</div>
-<div class="coin-counter">🪙 × <span id="coinCount">000</span></div>
+<div class="coin-counter" onclick="toggleAdmin()" title="Click para admin">🪙 × <span id="coinCount">000</span></div>
 
 <!-- Scrolling clouds -->
 <div class="clouds">
@@ -750,192 +807,12 @@
 
 <!-- ===== HAMBURGUESAS ===== -->
 <div class="section-title red">🍔 HAMBURGUESAS</div>
-
-<div class="menu">
-
-  <!-- Super Mario Galaxy -->
-  <div class="card" onclick="collectCoin()">
-    <div class="card-image-container" onclick="openModal(event, 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp')">
-      <img src="https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp" alt="Super Mario Galaxy" class="card-image" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'>🌌</div>'">
-    </div>
-    <div class="card-header">
-      <div class="card-icon">🌌</div>
-      <h2>Super Mario Galaxy<span class="badge badge-popular">⭐ TOP</span></h2>
-    </div>
-    <div class="card-body">
-      <p>Hamburguesa 100% carne de <span class="ingredient">145gr</span>, huevo frito, jamón, queso cheddar, ½ chorizo en tiras, papas chip, tocineta, pepinillos y vegetales — lechuga, tomate, cebolla caramelizada — con salsas.</p>
-      <div class="price-row">
-        <div class="price">$24.800</div>
-        <button class="btn-combo" onclick="event.stopPropagation(); showCombo()">Combo +$9.800</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mario Chiken -->
-  <div class="card" onclick="collectCoin()">
-    <div class="card-image-container" onclick="openModal(event, 'https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg')">
-      <img src="https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg" alt="Super Mario Chiken" class="card-image" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'>🍗</div>'">
-    </div>
-    <div class="card-header blue">
-      <div class="card-icon">🍗</div>
-      <h2>Super Mario Chiken</h2>
-    </div>
-    <div class="card-body">
-      <p>Hamburguesa de pollo apanado <span class="ingredient">145gr</span>, pepinillos, jamón, tocineta, papas chip, queso cheddar, huevos de codorniz, vegetales y salsas.</p>
-      <div class="price-row">
-        <div class="price">$20.900</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mario Picante -->
-  <div class="card" onclick="collectCoin()">
-    <div class="card-image-container" onclick="openModal(event, 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp')">
-      <img src="https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp" alt="Super Mario Picante" class="card-image" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'>🌶️</div>'">
-    </div>
-    <div class="card-header orange">
-      <div class="card-icon">🌶️</div>
-      <h2>Super Mario Picante<span class="badge badge-hot">🔥 HOT</span></h2>
-    </div>
-    <div class="card-body">
-      <p>Carne <span class="ingredient">145gr</span>, jalapeño, queso cheddar, pepinillos, tocineta, chicharrones en cuadritos, huevos de codorniz, salsa picante dulce y vegetales.</p>
-      <div class="price-row">
-        <div class="price">$24.000</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mario Maker -->
-  <div class="card" onclick="collectCoin()">
-    <div class="card-image-container" onclick="openModal(event, 'https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg')">
-      <img src="https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg" alt="Super Mario Maker" class="card-image" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'>🍍</div>'">
-    </div>
-    <div class="card-header green">
-      <div class="card-icon">🍍</div>
-      <h2>Super Mario Maker</h2>
-    </div>
-    <div class="card-body">
-      <p>Carne <span class="ingredient">145gr</span>, queso cheddar, pepinillos, tocineta, piña dulce, jamón, huevos de codorniz, vegetales y salsas.</p>
-      <div class="price-row">
-        <div class="price">$24.000</div>
-        <button class="btn-combo" onclick="event.stopPropagation(); showCombo()">Combo +$9.800</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mario Vegetariana -->
-  <div class="card" onclick="collectCoin()">
-    <div class="card-image-container" onclick="openModal(event, 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp')">
-      <img src="https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp" alt="Super Mario Vegetariana" class="card-image" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'>🥦</div>'">
-    </div>
-    <div class="card-header green">
-      <div class="card-icon">🥦</div>
-      <h2>Super Mario Vegetariana<span class="badge badge-veggie">🌿 VEGGIE</span></h2>
-    </div>
-    <div class="card-body">
-      <p>Hamburguesa de garbanzo y frijol, queso cheddar, pepinillos, papas chip, huevos de codorniz, vegetales y salsas.</p>
-      <div class="price-row">
-        <div class="price">$19.900</div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- ===== ENTRADAS ===== -->
-<div class="section-title green">🍄 ENTRADAS</div>
-
-<div class="menu">
-
-  <div class="entrada-card">
-    <div class="entrada-emoji">🥟</div>
-    <div class="entrada-info">
-      <h3>Empanadas</h3>
-      <div class="entrada-detail">🍄 x 6 unidades</div>
-      <div class="entrada-price">$17.000</div>
-    </div>
-  </div>
-
-  <div class="entrada-card">
-    <div class="entrada-emoji">🌭</div>
-    <div class="entrada-info">
-      <h3>Chorizos con Arepa</h3>
-      <div class="entrada-detail">🍄 x 6 unidades</div>
-      <div class="entrada-price">$14.000</div>
-    </div>
-  </div>
-
-  <div class="entrada-card">
-    <div class="entrada-emoji">🍖</div>
-    <div class="entrada-info">
-      <h3>Chicharrón con Papa Criolla</h3>
-      <div class="entrada-price">$19.800</div>
-    </div>
-  </div>
-
-  <div class="entrada-card">
-    <div class="entrada-emoji">🍵</div>
-    <div class="entrada-info">
-      <h3>Crema de Champiñón</h3>
-      <div class="entrada-price">$18.000</div>
-    </div>
-  </div>
-
-  <div class="entrada-card">
-    <div class="entrada-emoji">🧅</div>
-    <div class="entrada-info">
-      <h3>Aros de Cebolla</h3>
-      <div class="entrada-detail">🍄 x 7 unidades</div>
-      <div class="entrada-price">$16.000</div>
-    </div>
-  </div>
-
-</div>
-
-<!-- ===== MENÚ INFANTIL ===== -->
-<div class="section-title purple">👶 MENÚ INFANTIL · SUPER CAJITA</div>
-
-<div class="menu">
-  <div class="kids-card">
-    <div class="kids-header">
-      <div style="font-size:48px; margin-bottom:8px;">🍄</div>
-      <h2>SUPER CAJITA FELIZ<br>COMIDA + JUGO + MUÑECO</h2>
-    </div>
-    <div class="kids-body">
-      <div style="font-family:'Fredoka One',cursive; font-size:16px; color:#7c3aed; font-weight:700; margin-bottom:8px;">🎮 ELIGE TU OPCIÓN:</div>
-      <div class="kids-options">
-        <div class="kids-option">🌭 Mini Perro</div>
-        <div class="kids-option">🍔 Mini Hamburguesa</div>
-        <div class="kids-option">🍗 Nuggets</div>
-      </div>
-      <div class="kids-includes">🍟 Papitas Fritas + 🥤 Jugo + 🎁 El Muñeco</div>
-      <div class="kids-prices">
-        <div class="kids-price-item">
-          <span class="label">MUÑECO PEQUEÑO</span>
-          <div class="amount">$20.000</div>
-        </div>
-        <div class="kids-price-item">
-          <span class="label">MUÑECO MEDIANO</span>
-          <div class="amount">$25.000</div>
-        </div>
-        <div class="kids-price-item">
-          <span class="label">MUÑECO GRANDE</span>
-          <div class="amount">$38.800</div>
-        </div>
-        <div class="kids-price-item">
-          <span class="label">CON CARRO</span>
-          <div class="amount">$45.000</div>
-        </div>
-      </div>
-      <div style="font-family:'Fredoka One',cursive; font-size:13px; color:#9a7a4a; text-align:center; margin-top:14px;">🪙 Más opciones disponibles en vitrina</div>
-    </div>
-  </div>
-</div>
+<div class="menu" id="hamburguesasMenu"></div>
 
 <!-- ===== FOOTER EXTRA ===== -->
 <div class="footer-block" style="max-width:700px; margin: 20px auto;">
   <p>🧀 ADICIONAL QUESO FUNDIDO</p>
-  <span class="extra-price">$8.800</span>
+  <span class="extra-price" id="extraPrice">$8.800</span>
 </div>
 
 <!-- Pixel Ground -->
@@ -958,25 +835,289 @@
 <!-- Toast notification -->
 <div class="toast" id="toast"></div>
 
+<!-- Admin Panel -->
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-header">
+    <h3>⚙️ ADMIN</h3>
+    <button class="close-admin" onclick="toggleAdmin()">✕</button>
+  </div>
+  <div class="admin-content">
+    <div class="loading" id="adminLoading">Cargando...</div>
+    <div id="adminBody" style="display:none;">
+      
+      <!-- Editar productos -->
+      <div class="admin-section">
+        <h4>📝 Editar Productos</h4>
+        <div id="productsList"></div>
+      </div>
+
+      <!-- Agregar producto -->
+      <div class="admin-section">
+        <h4>➕ Nuevo Producto</h4>
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" id="newName" placeholder="Ej: Super Mario XXL">
+        </div>
+        <div class="form-group">
+          <label>Descripción</label>
+          <textarea id="newDesc" placeholder="Ingredientes y detalles" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Precio</label>
+          <input type="number" id="newPrice" placeholder="25000" min="0">
+        </div>
+        <div class="form-group">
+          <label>Emoji/Ícono</label>
+          <input type="text" id="newIcon" placeholder="🍔" maxlength="2">
+        </div>
+        <div class="form-group">
+          <label>Imagen (foto del producto)</label>
+          <input type="file" id="newImage" accept="image/*">
+        </div>
+        <button class="btn-admin" onclick="addNewProduct()">Agregar Producto</button>
+      </div>
+
+      <!-- Configuración -->
+      <div class="admin-section">
+        <h4>⚙️ Configuración</h4>
+        <div class="form-group">
+          <label>Precio Extra Queso</label>
+          <input type="number" id="extraPriceInput" placeholder="8800" min="0">
+          <button class="btn-admin" onclick="updateExtraPrice()" style="margin-top:8px;">Guardar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Admin Toggle Button -->
+<div class="admin-toggle" onclick="toggleAdmin()" title="⚙️ ADMIN">⚙️</div>
+
 <script>
+  // Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyDyvw3X7lospoKwfABiVI2AUBBJ1Aj9FJM",
+    authDomain: "mario-burgers.firebaseapp.com",
+    projectId: "mario-burgers",
+    storageBucket: "mario-burgers.firebasestorage.app",
+    messagingSenderId: "551642870590",
+    appId: "1:551642870590:web:c7eaaa3da2688fbe1d6776f",
+    databaseURL: "https://mario-burgers-default-rtdb.firebaseio.com"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
   let coins = 0;
+  let menuData = null;
+  let adminPassword = "1234"; // Contraseña admin
+
+  // Load menu from Firebase
+  function loadMenu() {
+    db.ref('menu').once('value', (snapshot) => {
+      menuData = snapshot.val();
+      if (!menuData) {
+        // Initialize default data
+        initializeDefaultData();
+      } else {
+        renderMenu();
+        updateAdminPanel();
+      }
+    });
+  }
+
+  function initializeDefaultData() {
+    menuData = {
+      hamburguesas: {
+        0: {
+          nombre: "Super Mario Galaxy",
+          descripcion: "Hamburguesa 100% carne de 145gr, huevo frito, jamón, queso cheddar, ½ chorizo en tiras, papas chip, tocineta, pepinillos y vegetales — lechuga, tomate, cebolla caramelizada — con salsas.",
+          precio: 24800,
+          icon: "🌌",
+          imagen: "https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp"
+        },
+        1: {
+          nombre: "Super Mario Chiken",
+          descripcion: "Hamburguesa de pollo apanado 145gr, pepinillos, jamón, tocineta, papas chip, queso cheddar, huevos de codorniz, vegetales y salsas.",
+          precio: 20900,
+          icon: "🍗",
+          imagen: "https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg"
+        }
+      },
+      extraPrice: 8800
+    };
+    
+    db.ref('menu').set(menuData, () => {
+      renderMenu();
+      updateAdminPanel();
+    });
+  }
+
+  function renderMenu() {
+    if (!menuData || !menuData.hamburguesas) return;
+    
+    const container = document.getElementById('hamburguesasMenu');
+    container.innerHTML = '';
+    
+    Object.entries(menuData.hamburguesas).forEach((entry, idx) => {
+      const [key, burger] = entry;
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.onclick = () => collectCoin();
+      
+      const imageSrc = burger.imagen || 'https://via.placeholder.com/300?text=' + burger.icon;
+      
+      card.innerHTML = `
+        <div class="card-image-container" onclick="openModal(event, '${imageSrc}')">
+          <img src="${imageSrc}" alt="${burger.nombre}" class="card-image" 
+            onerror="this.parentElement.innerHTML='<div class=\"card-image-placeholder\">${burger.icon}</div>'">
+        </div>
+        <div class="card-header">
+          <div class="card-icon">${burger.icon}</div>
+          <h2>${burger.nombre}</h2>
+        </div>
+        <div class="card-body">
+          <p>${burger.descripcion}</p>
+          <div class="price-row">
+            <div class="price">$${burger.precio.toLocaleString()}</div>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    document.getElementById('extraPrice').textContent = '$' + (menuData.extraPrice || 8800).toLocaleString();
+  }
+
+  function updateAdminPanel() {
+    const list = document.getElementById('productsList');
+    list.innerHTML = '';
+
+    if (menuData && menuData.hamburguesas) {
+      Object.entries(menuData.hamburguesas).forEach((entry) => {
+        const [key, burger] = entry;
+        const item = document.createElement('div');
+        item.className = 'product-item';
+        item.innerHTML = `
+          <h5>${burger.icon} ${burger.nombre}</h5>
+          <p>Precio: $${burger.precio}</p>
+          <button class="btn-small" onclick="editProduct('${key}')">✎ Editar</button>
+          <button class="btn-small btn-danger" onclick="deleteProduct('${key}')">✕ Borrar</button>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    document.getElementById('extraPriceInput').value = menuData?.extraPrice || 8800;
+    document.getElementById('adminLoading').style.display = 'none';
+    document.getElementById('adminBody').style.display = 'block';
+  }
+
+  function toggleAdmin() {
+    const panel = document.getElementById('adminPanel');
+    if (!panel.classList.contains('open')) {
+      const pwd = prompt('🔐 Contraseña Admin:');
+      if (pwd === adminPassword) {
+        panel.classList.add('open');
+      } else if (pwd !== null) {
+        alert('❌ Contraseña incorrecta');
+      }
+    } else {
+      panel.classList.remove('open');
+    }
+  }
+
+  function editProduct(key) {
+    const burger = menuData.hamburguesas[key];
+    const newPrice = prompt('Nuevo precio:', burger.precio);
+    if (newPrice) {
+      menuData.hamburguesas[key].precio = parseInt(newPrice);
+      db.ref('menu/hamburguesas/' + key + '/precio').set(parseInt(newPrice), () => {
+        renderMenu();
+        updateAdminPanel();
+        showToast('✅ Precio actualizado');
+      });
+    }
+  }
+
+  function deleteProduct(key) {
+    if (confirm('¿Eliminar este producto?')) {
+      delete menuData.hamburguesas[key];
+      db.ref('menu/hamburguesas/' + key).remove(() => {
+        renderMenu();
+        updateAdminPanel();
+        showToast('🗑️ Producto eliminado');
+      });
+    }
+  }
+
+  function addNewProduct() {
+    const name = document.getElementById('newName').value;
+    const desc = document.getElementById('newDesc').value;
+    const price = document.getElementById('newPrice').value;
+    const icon = document.getElementById('newIcon').value || '🍔';
+    const imageFile = document.getElementById('newImage').files[0];
+
+    if (!name || !desc || !price) {
+      alert('Completa todos los campos');
+      return;
+    }
+
+    const processProduct = (imageUrl) => {
+      const newKey = Date.now().toString();
+      const newProduct = {
+        nombre: name,
+        descripcion: desc,
+        precio: parseInt(price),
+        icon: icon,
+        imagen: imageUrl || 'https://via.placeholder.com/300'
+      };
+
+      if (!menuData.hamburguesas) menuData.hamburguesas = {};
+      menuData.hamburguesas[newKey] = newProduct;
+
+      db.ref('menu/hamburguesas/' + newKey).set(newProduct, () => {
+        document.getElementById('newName').value = '';
+        document.getElementById('newDesc').value = '';
+        document.getElementById('newPrice').value = '';
+        document.getElementById('newIcon').value = '';
+        document.getElementById('newImage').value = '';
+        renderMenu();
+        updateAdminPanel();
+        showToast('✅ Producto agregado');
+      });
+    };
+
+    if (imageFile) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        processProduct(e.target.result);
+      };
+      reader.readAsDataURL(imageFile);
+    } else {
+      processProduct(null);
+    }
+  }
+
+  function updateExtraPrice() {
+    const price = document.getElementById('extraPriceInput').value;
+    if (price) {
+      menuData.extraPrice = parseInt(price);
+      db.ref('menu/extraPrice').set(parseInt(price), () => {
+        renderMenu();
+        showToast('✅ Precio actualizado');
+      });
+    }
+  }
 
   function collectCoin() {
     coins++;
     document.getElementById('coinCount').textContent = String(coins).padStart(3, '0');
-    // Coin sound visual feedback
     const el = event.currentTarget;
     el.style.transform = 'scale(0.97)';
     setTimeout(() => { el.style.transform = ''; }, 150);
-  }
-
-  function showCombo() {
-    coins += 5;
-    document.getElementById('coinCount').textContent = String(coins).padStart(3, '0');
-    const toast = document.getElementById('toast');
-    toast.innerHTML = '🍟 COMBO AGREGADO! 🥤<br>Papas + Gaseosa<br>+$9.800';
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
   }
 
   function openModal(e, imageSrc) {
@@ -992,31 +1133,31 @@
     modal.classList.remove('show');
   }
 
-  // Close modal when clicking outside the image
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.innerHTML = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  // Event listeners
   document.getElementById('imageModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-      closeModal();
-    }
+    if (e.target === this) closeModal();
   });
 
-  // Close modal on Escape key
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      closeModal();
-    }
+    if (e.key === 'Escape') closeModal();
   });
 
-  // Animate cards on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.animationPlayState = 'running';
-      }
-    });
-  }, { threshold: 0.1 });
+  // Initialize on load
+  loadMenu();
 
-  document.querySelectorAll('.card, .entrada-card, .kids-card').forEach(c => {
-    observer.observe(c);
+  // Listen to real-time updates
+  db.ref('menu').on('value', (snapshot) => {
+    menuData = snapshot.val();
+    if (menuData) {
+      renderMenu();
+    }
   });
 </script>
 
