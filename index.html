@@ -24,7 +24,6 @@
     background: #1a8fd1;
     overflow-x: hidden;
     cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='24' font-size='24'%3E🍄%3C/text%3E%3C/svg%3E"), auto;
-    padding-bottom: 200px;
   }
 
   body::before {
@@ -379,10 +378,7 @@
     background: linear-gradient(to bottom, #1a8fd1, #0a5a8a);
     padding: 20px 0 30px;
     text-align: center;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: relative;
     z-index: 10;
     border-top: 4px solid #ffd700;
   }
@@ -423,10 +419,7 @@
     height: 32px;
     background: repeating-linear-gradient(90deg, #5c4a1e 0px, #5c4a1e 32px, #7a6030 32px, #7a6030 64px);
     border-top: 4px solid #3a2a0a;
-    position: fixed;
-    bottom: 160px;
-    left: 0;
-    right: 0;
+    position: relative;
     z-index: 10;
   }
   .pixel-ground::before {
@@ -990,17 +983,14 @@
         m1: {
           nombre: 'SUPER CAJITA FELIZ',
           icon: '🎪',
+          precioBase: 25000,
           items: [
-            { nombre: 'Mini Perro', icon: '🌭' },
-            { nombre: 'Mini Hamburguesa', icon: '🍔' },
-            { nombre: 'Nuggets', icon: '🍗' }
-          ],
-          includes: ['🍟 Papitas Fritas', '🥤 Jugo', '🎁 Muñeco'],
-          opciones: [
-            { nombre: 'MUÑECO PEQUEÑO', precio: 20000 },
-            { nombre: 'MUÑECO MEDIANO', precio: 25000 },
-            { nombre: 'MUÑECO GRANDE', precio: 38800 },
-            { nombre: 'CON CARRO', precio: 45000 }
+            { id: 'i1', nombre: 'Mini Perro', emoji: '🌭', precio: null, imagen: null },
+            { id: 'i2', nombre: 'Mini Hamburguesa', emoji: '🍔', precio: null, imagen: null },
+            { id: 'i3', nombre: 'Nuggets', emoji: '🍗', precio: null, imagen: null },
+            { id: 'i4', nombre: 'Muñeco Pequeño', emoji: '🎁', precio: 20000, imagen: null },
+            { id: 'i5', nombre: 'Muñeco Mediano', emoji: '🎁', precio: 25000, imagen: null },
+            { id: 'i6', nombre: 'Muñeco Grande', emoji: '🎁', precio: 38800, imagen: null }
           ],
           nota: 'Más opciones disponibles en vitrina'
         }
@@ -1110,34 +1100,27 @@
         const body = document.createElement('div');
         body.className = 'menu-body';
 
-        // Items del menú
+        // Items del menú - con fotos pequeñas y diferenciación opción/extra
         let itemsHtml = '<div class="menu-items">';
         if (menu.items && menu.items.length > 0) {
           menu.items.forEach(item => {
-            itemsHtml += `<div class="menu-item">${item.icon} ${item.nombre}</div>`;
+            const isExtra = item.precio ? true : false;
+            const priceLabel = isExtra ? ` (+$${item.precio})` : '';
+            const imgHtml = item.imagen ? `<img src="${item.imagen}" style="width:24px; height:24px; border-radius:4px; margin-right:6px;">` : '';
+            itemsHtml += `<div class="menu-item" style="display:flex; align-items:center;">${imgHtml}${item.emoji} ${item.nombre}${priceLabel}</div>`;
           });
         }
         itemsHtml += '</div>';
 
-        // Includes
-        let includesHtml = '';
-        if (menu.includes && menu.includes.length > 0) {
-          includesHtml = `<div class="menu-includes">${menu.includes.join(' + ')}</div>`;
-        }
-
-        // Precios
-        let pricesHtml = '<div class="menu-prices">';
-        if (menu.opciones && menu.opciones.length > 0) {
-          menu.opciones.forEach(opcion => {
-            pricesHtml += `
-              <div class="menu-price-item">
-                <span class="label">${opcion.nombre}</span>
-                <div class="amount">$${opcion.precio.toLocaleString()}</div>
-              </div>
-            `;
-          });
-        }
-        pricesHtml += '</div>';
+        // Precio base del menú
+        let priceHtml = `
+          <div class="menu-prices">
+            <div class="menu-price-item">
+              <span class="label">PRECIO BASE</span>
+              <div class="amount">$${menu.precioBase.toLocaleString()}</div>
+            </div>
+          </div>
+        `;
 
         // Nota
         let noteHtml = '';
@@ -1145,7 +1128,7 @@
           noteHtml = `<div class="menu-note">🪙 ${menu.nota}</div>`;
         }
 
-        body.innerHTML = itemsHtml + includesHtml + pricesHtml + noteHtml;
+        body.innerHTML = itemsHtml + priceHtml + noteHtml;
 
         menuCard.appendChild(header);
         menuCard.appendChild(body);
@@ -1191,10 +1174,22 @@
         <h4>🎪 CREAR MENÚ ESPECIAL</h4>
         <div id="menusList"></div>
         <div class="form-group"><label>Nombre del Menú</label><input type="text" id="newMenuName" placeholder="Ej: Super Cajita Feliz"></div>
-        <div class="form-group"><label>Emoji</label><div class="emoji-picker" id="menuEmojiPicker"></div><input type="text" id="newMenuEmoji" placeholder="🎪" maxlength="2" value="🎪"></div>
-        <div class="form-group"><label>Items (nombre:emoji)</label><textarea id="menuItems" placeholder="Mini Perro:🌭&#10;Mini Hamburguesa:🍔&#10;Nuggets:🍗" rows="3"></textarea></div>
-        <div class="form-group"><label>Incluye (ej: Papas+Gaseosa)</label><textarea id="menuIncludes" placeholder="Papitas Fritas:🍟&#10;Jugo:🥤&#10;Muñeco:🎁" rows="2"></textarea></div>
-        <div class="form-group"><label>Opciones de Precio</label><textarea id="menuOpciones" placeholder="Muñeco Pequeño:20000&#10;Muñeco Mediano:25000" rows="3"></textarea></div>
+        <div class="form-group"><label>Emoji del Menú</label><div class="emoji-picker" id="menuEmojiPicker"></div><input type="text" id="newMenuEmoji" placeholder="🎪" maxlength="2" value="🎪"></div>
+        <div class="form-group"><label>Precio Base del Menú</label><input type="number" id="newMenuPrice" placeholder="25000" min="0"></div>
+        
+        <div class="form-group">
+          <label>ÍTEMS DEL MENÚ (agregar uno por uno)</label>
+          <div id="menuItemsList" style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 6px; margin-bottom: 12px; max-height: 150px; overflow-y: auto;"></div>
+          
+          <div style="border: 2px solid #ffd700; padding: 12px; border-radius: 6px; margin-bottom: 12px;">
+            <div class="form-group"><label>Nombre del Ítem</label><input type="text" id="itemName" placeholder="Ej: Mini Perro"></div>
+            <div class="form-group"><label>Emoji del Ítem</label><div class="emoji-picker" id="itemEmojiPicker"></div><input type="text" id="itemEmoji" placeholder="🌭" maxlength="2"></div>
+            <div class="form-group"><label>Precio del Ítem (dejar vacío si no es extra)</label><input type="number" id="itemPrice" placeholder="Vacío = opción, Con precio = extra" min="0"></div>
+            <div class="form-group"><label>Foto del Ítem (opcional)</label><input type="file" id="itemImage" accept="image/*"></div>
+            <button class="btn-admin" style="background: #1a8fd1;" onclick="addMenuItemToList()">+ Agregar Ítem</button>
+          </div>
+        </div>
+        
         <div class="form-group"><label>Nota (opcional)</label><input type="text" id="menuNota" placeholder="Más opciones disponibles en vitrina"></div>
         <button class="btn-admin" onclick="addNewMenu()">✓ Crear Menú</button>
       </div>
@@ -1339,6 +1334,22 @@
         menuEmojiPicker.appendChild(btn);
       });
     }
+
+    const itemEmojiPicker = document.getElementById('itemEmojiPicker');
+    if (itemEmojiPicker) {
+      itemEmojiPicker.innerHTML = '';
+      emojis.forEach(emoji => {
+        const btn = document.createElement('button');
+        btn.className = 'emoji-btn';
+        btn.textContent = emoji;
+        btn.type = 'button';
+        btn.onclick = (e) => {
+          e.preventDefault();
+          document.getElementById('itemEmoji').value = emoji;
+        };
+        itemEmojiPicker.appendChild(btn);
+      });
+    }
   }
 
   function addCategory() {
@@ -1439,57 +1450,94 @@
     }
   }
 
+  let menuItemsBuffer = [];
+
+  function addMenuItemToList() {
+    const name = document.getElementById('itemName').value;
+    const emoji = document.getElementById('itemEmoji').value || '🍔';
+    const price = document.getElementById('itemPrice').value;
+    const imageFile = document.getElementById('itemImage').files[0];
+
+    if (!name) return alert('Nombre del ítem requerido');
+
+    const itemKey = 'item_' + Date.now();
+    const processItem = (imgData) => {
+      const item = {
+        id: itemKey,
+        nombre: name,
+        emoji: emoji,
+        precio: price ? parseInt(price) : null,
+        imagen: imgData || null
+      };
+      
+      menuItemsBuffer.push(item);
+      
+      // Actualizar lista visual
+      updateMenuItemsList();
+      
+      // Limpiar form
+      document.getElementById('itemName').value = '';
+      document.getElementById('itemEmoji').value = '';
+      document.getElementById('itemPrice').value = '';
+      document.getElementById('itemImage').value = '';
+    };
+
+    if (imageFile) {
+      const reader = new FileReader();
+      reader.onload = (e) => processItem(e.target.result);
+      reader.readAsDataURL(imageFile);
+    } else {
+      processItem(null);
+    }
+  }
+
+  function updateMenuItemsList() {
+    const list = document.getElementById('menuItemsList');
+    list.innerHTML = '';
+    
+    menuItemsBuffer.forEach((item, idx) => {
+      const itemDiv = document.createElement('div');
+      itemDiv.style.cssText = 'background: rgba(255,215,0,0.1); padding: 8px; margin-bottom: 6px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;';
+      itemDiv.innerHTML = `
+        <span>${item.emoji} ${item.nombre}${item.precio ? ' (+$' + item.precio + ')' : ''}</span>
+        <button class="btn-small" style="background: #e52222; padding: 4px 8px; font-size: 9px;" onclick="removeMenuItemFromList(${idx})">✕</button>
+      `;
+      list.appendChild(itemDiv);
+    });
+  }
+
+  function removeMenuItemFromList(idx) {
+    menuItemsBuffer.splice(idx, 1);
+    updateMenuItemsList();
+  }
+
   function addNewMenu() {
     const name = document.getElementById('newMenuName').value;
     const emoji = document.getElementById('newMenuEmoji').value || '🎪';
-    const itemsText = document.getElementById('menuItems').value;
-    const includesText = document.getElementById('menuIncludes').value;
-    const opcionesText = document.getElementById('menuOpciones').value;
+    const price = document.getElementById('newMenuPrice').value;
     const nota = document.getElementById('menuNota').value;
 
-    if (!name || !itemsText || !opcionesText) return alert('Completa los campos obligatorios');
-
-    // Parsear items
-    const items = [];
-    itemsText.split('\n').forEach(line => {
-      const [nombre, icon] = line.split(':');
-      if (nombre && icon) items.push({ nombre: nombre.trim(), icon: icon.trim() });
-    });
-
-    // Parsear includes
-    const includes = [];
-    if (includesText.trim()) {
-      includesText.split('\n').forEach(line => {
-        const [nombre, icon] = line.split(':');
-        if (nombre && icon) includes.push(`${icon.trim()} ${nombre.trim()}`);
-      });
+    if (!name || !price || menuItemsBuffer.length === 0) {
+      return alert('Completa: nombre, precio base e ítems del menú');
     }
-
-    // Parsear opciones
-    const opciones = [];
-    opcionesText.split('\n').forEach(line => {
-      const [nombre, precio] = line.split(':');
-      if (nombre && precio) opciones.push({ nombre: nombre.trim(), precio: parseInt(precio) });
-    });
 
     const key = 'm' + Date.now();
     menuData.menus = menuData.menus || {};
     menuData.menus[key] = {
       nombre: name,
       icon: emoji,
-      items: items,
-      includes: includes,
-      opciones: opciones,
+      precioBase: parseInt(price),
+      items: JSON.parse(JSON.stringify(menuItemsBuffer)),
       nota: nota || null
     };
 
     db.ref('menu/menus/' + key).set(menuData.menus[key], () => {
       document.getElementById('newMenuName').value = '';
       document.getElementById('newMenuEmoji').value = '🎪';
-      document.getElementById('menuItems').value = '';
-      document.getElementById('menuIncludes').value = '';
-      document.getElementById('menuOpciones').value = '';
+      document.getElementById('newMenuPrice').value = '';
       document.getElementById('menuNota').value = '';
+      menuItemsBuffer = [];
+      updateMenuItemsList();
       renderMenu();
       updateAdminPanel();
       showToast('✅ Menú creado');
