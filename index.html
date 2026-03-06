@@ -1104,23 +1104,28 @@
         let itemsHtml = '<div class="menu-items">';
         if (menu.items && menu.items.length > 0) {
           menu.items.forEach(item => {
+            if (!item || !item.nombre) return;
             const isExtra = item.precio ? true : false;
             const priceLabel = isExtra ? ` (+$${item.precio})` : '';
             const imgHtml = item.imagen ? `<img src="${item.imagen}" style="width:24px; height:24px; border-radius:4px; margin-right:6px;">` : '';
-            itemsHtml += `<div class="menu-item" style="display:flex; align-items:center;">${imgHtml}${item.emoji} ${item.nombre}${priceLabel}</div>`;
+            const emoji = item.emoji || item.icon || '📦';
+            itemsHtml += `<div class="menu-item" style="display:flex; align-items:center;">${imgHtml}${emoji} ${item.nombre}${priceLabel}</div>`;
           });
         }
         itemsHtml += '</div>';
 
         // Precio base del menú
-        let priceHtml = `
-          <div class="menu-prices">
-            <div class="menu-price-item">
-              <span class="label">PRECIO BASE</span>
-              <div class="amount">$${menu.precioBase.toLocaleString()}</div>
+        let priceHtml = '';
+        if (menu.precioBase) {
+          priceHtml = `
+            <div class="menu-prices">
+              <div class="menu-price-item">
+                <span class="label">PRECIO BASE</span>
+                <div class="amount">$${menu.precioBase.toLocaleString()}</div>
+              </div>
             </div>
-          </div>
-        `;
+          `;
+        }
 
         // Nota
         let noteHtml = '';
