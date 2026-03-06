@@ -1256,6 +1256,24 @@
       item.innerHTML = `<h5>${product.icon} ${product.nombre}</h5><p>$${product.precio}</p><button class="btn-small" onclick="editProduct('${key}')">✎ Editar</button><button class="btn-small" style="background:#e52222;" onclick="deleteProduct('${key}')">✕ Eliminar</button>`;
       prodList.appendChild(item);
     });
+
+    // Listar menús existentes
+    const menusList = document.getElementById('menusList');
+    if (menusList) {
+      menusList.innerHTML = '';
+      Object.entries(menuData.menus || {}).forEach(([key, menu]) => {
+        const menuDiv = document.createElement('div');
+        menuDiv.className = 'product-item';
+        menuDiv.style.background = 'rgba(124, 58, 237, 0.2)';
+        const itemCount = menu.items ? menu.items.length : 0;
+        menuDiv.innerHTML = `
+          <h5>${menu.icon} ${menu.nombre}</h5>
+          <p>Precio Base: $${menu.precioBase || 0} | ${itemCount} ítems</p>
+          <button class="btn-small" style="background:#e52222;" onclick="deleteMenu('${key}')">✕ Eliminar Menú</button>
+        `;
+        menusList.appendChild(menuDiv);
+      });
+    }
   }
 
   function setupPickers() {
@@ -1443,6 +1461,13 @@
     if (confirm('¿Eliminar producto?')) {
       delete menuData.products[key];
       db.ref('menu/products/' + key).remove(() => { renderMenu(); updateAdminPanel(); showToast('🗑️ Producto eliminado'); });
+    }
+  }
+
+  function deleteMenu(key) {
+    if (confirm('¿Eliminar menú?')) {
+      delete menuData.menus[key];
+      db.ref('menu/menus/' + key).remove(() => { renderMenu(); updateAdminPanel(); showToast('🎪 Menú eliminado'); });
     }
   }
 
