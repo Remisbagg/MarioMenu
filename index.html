@@ -28,7 +28,6 @@
     cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='24' font-size='24'%3E🍄%3C/text%3E%3C/svg%3E"), auto;
   }
 
-  /* Pixel star background */
   body::before {
     content: '';
     position: fixed;
@@ -44,7 +43,6 @@
     z-index: 0;
   }
 
-  /* ===== SCROLLING CLOUDS ===== */
   .clouds {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -68,7 +66,6 @@
     to { transform: translateX(calc(100vw + 200px)); }
   }
 
-  /* ===== FLOATING COINS ===== */
   .coin-float {
     position: fixed;
     font-size: 24px;
@@ -87,13 +84,6 @@
     50% { transform: translateY(-15px) scale(1.2); }
   }
 
-  /* ===== GROUND BLOCK FOOTER ===== */
-  .ground {
-    position: relative;
-    z-index: 3;
-  }
-
-  /* ===== HEADER ===== */
   .header {
     text-align: center;
     padding: 30px 20px 20px;
@@ -121,10 +111,7 @@
     font-family: 'Press Start 2P', monospace;
     font-size: clamp(18px, 5vw, 36px);
     color: #ffd700;
-    text-shadow:
-      4px 4px 0 #e52222,
-      -2px -2px 0 #a00,
-      0 0 30px rgba(255,215,0,0.7);
+    text-shadow: 4px 4px 0 #e52222, -2px -2px 0 #a00, 0 0 30px rgba(255,215,0,0.7);
     letter-spacing: 2px;
     line-height: 1.4;
     animation: titleGlow 2s ease-in-out infinite alternate;
@@ -143,26 +130,6 @@
     letter-spacing: 3px;
   }
 
-  /* ===== PIPE DIVIDER ===== */
-  .pipe-divider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin: 16px 0;
-    padding: 0 20px;
-  }
-  .pipe-divider::before, .pipe-divider::after {
-    content: '';
-    flex: 1;
-    height: 4px;
-    background: linear-gradient(90deg, transparent, #ffd700, transparent);
-    border-radius: 2px;
-  }
-  .pipe-divider span { font-size: 28px; animation: spin 4s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* ===== SECTION TITLE ===== */
   .section-title {
     font-family: 'Press Start 2P', monospace;
     font-size: clamp(12px, 3.5vw, 20px);
@@ -172,31 +139,36 @@
     border-radius: 16px;
     position: relative;
     z-index: 10;
-    animation: sectionPop 0.5s ease-out both;
   }
   .section-title.red {
     background: linear-gradient(135deg, #e52222, #ff5555);
     color: #ffd700;
     text-shadow: 3px 3px 0 #900;
     border: 4px solid #ffd700;
-    box-shadow: 0 6px 0 #900, 0 8px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+    box-shadow: 0 6px 0 #900, 0 8px 20px rgba(0,0,0,0.3);
   }
   .section-title.green {
     background: linear-gradient(135deg, #2db83d, #44cc55);
     color: white;
     text-shadow: 3px 3px 0 #0a5a12;
     border: 4px solid #ffd700;
-    box-shadow: 0 6px 0 #0a5a12, 0 8px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+    box-shadow: 0 6px 0 #0a5a12, 0 8px 20px rgba(0,0,0,0.3);
+  }
+  .section-title.blue {
+    background: linear-gradient(135deg, #1a8fd1, #0066aa);
+    color: #ffd700;
+    text-shadow: 3px 3px 0 #004080;
+    border: 4px solid #ffd700;
+    box-shadow: 0 6px 0 #004080, 0 8px 20px rgba(0,0,0,0.3);
   }
   .section-title.purple {
     background: linear-gradient(135deg, #7c3aed, #a855f7);
     color: #ffd700;
     text-shadow: 3px 3px 0 #3b0764;
     border: 4px solid #ffd700;
-    box-shadow: 0 6px 0 #3b0764, 0 8px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+    box-shadow: 0 6px 0 #3b0764, 0 8px 20px rgba(0,0,0,0.3);
   }
 
-  /* ===== MENU CONTAINER ===== */
   .menu {
     display: flex;
     flex-direction: column;
@@ -208,39 +180,21 @@
     z-index: 10;
   }
 
-  /* ===== CARDS ===== */
   .card {
     background: linear-gradient(160deg, #fff9f0, #fffde7);
     border-radius: 20px;
     padding: 0;
-    box-shadow:
-      0 8px 0 #b8860b,
-      0 12px 30px rgba(0,0,0,0.3),
-      inset 0 1px 0 rgba(255,255,255,0.9);
+    box-shadow: 0 8px 0 #b8860b, 0 12px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.9);
     border: 4px solid #ffd700;
     overflow: hidden;
     transform: translateY(20px);
     opacity: 0;
     animation: cardSlideIn 0.6s ease-out forwards;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .card:nth-child(1) { animation-delay: 0.1s; }
-  .card:nth-child(2) { animation-delay: 0.2s; }
-  .card:nth-child(3) { animation-delay: 0.3s; }
-  .card:nth-child(4) { animation-delay: 0.4s; }
-  .card:nth-child(5) { animation-delay: 0.5s; }
-  .card:nth-child(6) { animation-delay: 0.6s; }
-  .card:nth-child(7) { animation-delay: 0.7s; }
-  .card:nth-child(8) { animation-delay: 0.8s; }
   @keyframes cardSlideIn {
     to { transform: translateY(0); opacity: 1; }
   }
-  .card:active {
-    transform: translateY(4px);
-    box-shadow: 0 4px 0 #b8860b, 0 6px 15px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.9);
-  }
 
-  /* ===== CARD IMAGE ===== */
   .card-image-container {
     width: 100%;
     aspect-ratio: 1 / 1;
@@ -248,11 +202,6 @@
     background: linear-gradient(135deg, #f5e6d3, #e8d5c4);
     border-bottom: 3px solid #ffd700;
     cursor: pointer;
-    position: relative;
-    transition: transform 0.2s ease;
-  }
-  .card-image-container:hover {
-    transform: scale(1.05);
   }
   .card-image {
     width: 100%;
@@ -260,15 +209,7 @@
     object-fit: cover;
     object-position: center;
     display: block;
-  }
-  .card-image-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 48px;
-    background: linear-gradient(135deg, #f0e6d2, #e8d5c4);
+    filter: brightness(1.1) contrast(1.1);
   }
 
   .card-header {
@@ -288,12 +229,6 @@
     font-size: 36px;
     flex-shrink: 0;
     filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.4));
-    animation: iconWiggle 3s ease-in-out infinite;
-  }
-  @keyframes iconWiggle {
-    0%, 90%, 100% { transform: rotate(0deg); }
-    93% { transform: rotate(-10deg); }
-    96% { transform: rotate(10deg); }
   }
 
   .card h2 {
@@ -301,7 +236,6 @@
     color: #ffd700;
     font-size: clamp(9px, 2.5vw, 14px);
     text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
-    line-height: 1.5;
   }
 
   .card-body {
@@ -313,24 +247,13 @@
     line-height: 1.7;
     font-size: clamp(12px, 3vw, 15px);
     font-weight: 700;
-  }
-
-  .card p .ingredient {
-    background: #ffd700;
-    color: #333;
-    border-radius: 4px;
-    padding: 1px 5px;
-    font-size: 0.85em;
-    font-weight: 900;
-    display: inline-block;
-    margin: 1px;
+    margin-bottom: 12px;
   }
 
   .price-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 14px;
     gap: 12px;
     flex-wrap: wrap;
   }
@@ -343,49 +266,56 @@
     padding: 8px 16px;
     border-radius: 12px;
     border: 3px solid #ffd700;
-    box-shadow: 0 4px 0 #900, 0 6px 15px rgba(229,34,34,0.4);
+    box-shadow: 0 4px 0 #900;
     text-shadow: 2px 2px 0 #900;
     white-space: nowrap;
   }
 
-  .btn-combo {
-    font-family: 'Fredoka One', cursive;
-    padding: 10px 16px;
-    border: none;
-    background: linear-gradient(135deg, #2db83d, #1a9a28);
-    color: white;
-    font-weight: 700;
-    font-size: clamp(12px, 3vw, 16px);
-    border-radius: 12px;
-    cursor: pointer;
+  .extras-section {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 2px dashed #ffd700;
+  }
+  .extra-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background: rgba(255,215,0,0.1);
+    border-radius: 8px;
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+
+  .coin-counter {
+    position: fixed;
+    top: 16px; right: 16px;
+    background: rgba(0,0,0,0.7);
     border: 3px solid #ffd700;
-    box-shadow: 0 4px 0 #0a5a12, 0 6px 15px rgba(45,184,61,0.4);
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
-    transition: all 0.15s ease;
-    letter-spacing: 0.5px;
+    border-radius: 12px;
+    padding: 8px 14px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #ffd700;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    cursor: pointer;
   }
-  .btn-combo:hover, .btn-combo:active {
-    transform: translateY(3px);
-    box-shadow: 0 1px 0 #0a5a12, 0 2px 8px rgba(45,184,61,0.3);
-  }
-  .btn-combo::before { content: '🍟 '; }
 
-  /* ===== STAR POWER BADGE ===== */
-  .badge {
-    display: inline-block;
-    font-family: 'Fredoka One', cursive;
-    font-size: 11px;
-    padding: 3px 8px;
-    border-radius: 20px;
-    font-weight: 700;
-    margin-left: 8px;
-    vertical-align: middle;
+  .mario-lives {
+    position: fixed;
+    top: 16px; left: 16px;
+    background: rgba(0,0,0,0.7);
+    border: 3px solid #ffd700;
+    border-radius: 12px;
+    padding: 8px 14px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: white;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
   }
-  .badge-hot { background: #ff4500; color: white; }
-  .badge-popular { background: #ffd700; color: #333; }
-  .badge-veggie { background: #2db83d; color: white; }
 
-  /* ===== FOOTER ===== */
   .footer-block {
     background: linear-gradient(135deg, #e52222, #cc1111);
     margin: 20px 16px;
@@ -403,16 +333,7 @@
     color: white;
     text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
   }
-  .footer-block .extra-price {
-    font-family: 'Press Start 2P', monospace;
-    font-size: clamp(12px, 3vw, 18px);
-    color: #ffd700;
-    text-shadow: 2px 2px 0 #900;
-    margin-top: 6px;
-    display: block;
-  }
 
-  /* ===== MARIO PIXEL BOTTOM ===== */
   .mario-bottom {
     background: linear-gradient(to bottom, #1a8fd1, #0a5a8a);
     padding: 20px 0 30px;
@@ -427,84 +348,33 @@
     margin-top: 12px;
   }
 
-  /* Pixel ground */
-  .pixel-ground {
-    height: 32px;
-    background: repeating-linear-gradient(
-      90deg,
-      #5c4a1e 0px, #5c4a1e 32px,
-      #7a6030 32px, #7a6030 64px
-    );
-    border-top: 4px solid #3a2a0a;
-    position: relative;
-    z-index: 10;
-  }
-  .pixel-ground::before {
-    content: '';
-    position: absolute;
-    top: -8px; left: 0; right: 0;
-    height: 8px;
-    background: repeating-linear-gradient(
-      90deg,
-      #8a7040 0px, #8a7040 32px,
-      #6a5025 32px, #6a5025 64px
-    );
-  }
-
-  /* ===== COIN COUNTER ===== */
-  .coin-counter {
-    position: fixed;
-    top: 16px; right: 16px;
-    background: rgba(0,0,0,0.7);
-    border: 3px solid #ffd700;
-    border-radius: 12px;
-    padding: 8px 14px;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    color: #ffd700;
-    z-index: 100;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  .secret-combo {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
     cursor: pointer;
   }
-
-  /* ===== MARIO LIVES ===== */
-  .mario-lives {
-    position: fixed;
-    top: 16px; left: 16px;
-    background: rgba(0,0,0,0.7);
-    border: 3px solid #ffd700;
-    border-radius: 12px;
-    padding: 8px 14px;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    color: white;
-    z-index: 100;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  .combo-item {
+    font-size: 32px;
+    animation: bobbing 1s ease-in-out infinite;
+    user-select: none;
+    transition: transform 0.1s;
+  }
+  .combo-item:nth-child(1) { animation-delay: 0s; }
+  .combo-item:nth-child(2) { animation-delay: 0.2s; }
+  .combo-item:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bobbing {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .combo-item.active { animation: pulse 0.3s ease-out; }
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
   }
 
-  /* ===== POPUP TOAST ===== */
-  .toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: linear-gradient(135deg, #2db83d, #1a9a28);
-    color: white;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
-    padding: 14px 22px;
-    border-radius: 12px;
-    border: 3px solid #ffd700;
-    box-shadow: 0 6px 0 #0a5a12, 0 10px 30px rgba(0,0,0,0.4);
-    z-index: 999;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    text-align: center;
-    max-width: 280px;
-    line-height: 1.8;
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); }
-
-  /* ===== MODAL LIGHTBOX ===== */
   .modal {
     display: none;
     position: fixed;
@@ -514,19 +384,8 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
-    animation: fadeIn 0.3s ease;
   }
-
-  .modal.show {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+  .modal.show { display: flex; align-items: center; justify-content: center; }
 
   .modal-content {
     position: relative;
@@ -537,18 +396,6 @@
     border: 6px solid #ffd700;
     box-shadow: 0 0 0 4px #e52222, 0 20px 60px rgba(0,0,0,0.8);
     overflow: hidden;
-    animation: zoomIn 0.3s ease;
-  }
-
-  @keyframes zoomIn {
-    from {
-      transform: scale(0.8);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
   }
 
   .modal-image {
@@ -558,6 +405,7 @@
     height: auto;
     display: block;
     margin: auto;
+    filter: brightness(1.1) contrast(1.1);
   }
 
   .modal-close {
@@ -576,35 +424,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s ease;
     box-shadow: 0 4px 12px rgba(0,0,0,0.5);
   }
 
-  .modal-close:hover {
-    transform: scale(1.1);
-  }
-
-  /* ===== ADMIN PANEL ===== */
-  .admin-toggle {
+  .toast {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: rgba(0,0,0,0.8);
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: linear-gradient(135deg, #2db83d, #1a9a28);
+    color: white;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    padding: 14px 22px;
+    border-radius: 12px;
     border: 3px solid #ffd700;
-    color: #ffd700;
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s;
+    box-shadow: 0 6px 0 #0a5a12, 0 10px 30px rgba(0,0,0,0.4);
+    z-index: 999;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-align: center;
+    max-width: 280px;
   }
-  .admin-toggle:hover { transform: scale(1.1); }
+  .toast.show { transform: translateX(-50%) translateY(0); }
 
+  /* Admin Panel */
   .admin-panel {
     position: fixed;
     right: -400px;
@@ -662,7 +505,6 @@
     font-family: 'Press Start 2P', monospace;
     font-size: 11px;
     margin-bottom: 12px;
-    text-transform: uppercase;
   }
 
   .form-group {
@@ -672,9 +514,9 @@
   .form-group label {
     display: block;
     color: #fff;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     font-family: 'Fredoka One', cursive;
   }
 
@@ -688,12 +530,34 @@
     background: rgba(255,255,255,0.1);
     color: #fff;
     font-family: 'Nunito', sans-serif;
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .form-group input::placeholder,
   .form-group textarea::placeholder {
     color: rgba(255,255,255,0.5);
+  }
+
+  .emoji-picker {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .emoji-btn {
+    padding: 8px;
+    background: rgba(255,215,0,0.2);
+    border: 2px solid #ffd700;
+    border-radius: 6px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .emoji-btn:hover {
+    background: rgba(255,215,0,0.4);
+    transform: scale(1.1);
   }
 
   .btn-admin {
@@ -706,22 +570,11 @@
     font-weight: 700;
     font-family: 'Fredoka One', cursive;
     cursor: pointer;
-    font-size: 12px;
-    transition: all 0.2s;
+    font-size: 11px;
   }
 
   .btn-admin:hover {
     background: linear-gradient(135deg, #1a9a28, #0d7a1a);
-    transform: translateY(-2px);
-  }
-
-  .btn-danger {
-    background: linear-gradient(135deg, #e52222, #cc1111) !important;
-    margin-top: 8px;
-  }
-
-  .btn-danger:hover {
-    background: linear-gradient(135deg, #cc1111, #bb0000) !important;
   }
 
   .product-item {
@@ -735,19 +588,13 @@
   .product-item h5 {
     color: #ffd700;
     margin: 0 0 6px 0;
-    font-size: 12px;
-  }
-
-  .product-item p {
-    color: #ccc;
-    margin: 4px 0;
     font-size: 11px;
   }
 
   .btn-small {
     padding: 6px 12px;
-    font-size: 10px;
-    margin-right: 6px;
+    font-size: 9px;
+    margin-right: 4px;
     background: #e52222;
     color: white;
     border: 1px solid #ffd700;
@@ -755,22 +602,16 @@
     cursor: pointer;
   }
 
-  .loading {
-    text-align: center;
-    color: #ffd700;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 12px;
-    padding: 20px;
+  .pixel-ground {
+    height: 32px;
+    background: repeating-linear-gradient(90deg, #5c4a1e 0px, #5c4a1e 32px, #7a6030 32px, #7a6030 64px);
+    border-top: 4px solid #3a2a0a;
+    position: relative;
+    z-index: 10;
   }
 
   @media (max-width: 480px) {
-    .admin-panel {
-      width: 100%;
-      right: -100%;
-    }
-    .admin-toggle {
-      display: none;
-    }
+    .admin-panel { width: 100%; right: -100%; }
   }
 </style>
 </head>
@@ -785,7 +626,7 @@
 
 <!-- HUD -->
 <div class="mario-lives">🍄 × 3&nbsp;&nbsp;VIDAS</div>
-<div class="coin-counter" onclick="toggleAdmin()" title="Click para admin">🪙 × <span id="coinCount">000</span></div>
+<div class="coin-counter" onclick="openAdmin()" title="Click para editar">🪙 × <span id="coinCount">000</span></div>
 
 <!-- Scrolling clouds -->
 <div class="clouds">
@@ -794,108 +635,130 @@
   <div class="cloud">☁️</div>
 </div>
 
-<!-- ===== HEADER ===== -->
+<!-- HEADER -->
 <div class="header">
-  <img class="header-logo"
-    src="https://upload.wikimedia.org/wikipedia/en/a/a9/MarioNSMBUDeluxe.png"
-    alt="Mario"
-    onerror="this.src='https://play-lh.googleusercontent.com/inV5N0eACXXzr9oyPgjiAYApr6YrKvTH68wWTEd3g3gahQkpWac1G_F6ZIFMUfZO94Wg'; this.onerror=null;">
+  <img class="header-logo" src="https://upload.wikimedia.org/wikipedia/en/a/a9/MarioNSMBUDeluxe.png" alt="Mario" onerror="this.style.display='none'">
   <div class="header-title">🍄 MARIO BURGERS</div>
   <div class="header-subtitle">SUPER MENÚ · TODO LO QUE TE OFRECEMOS</div>
-  <div class="pipe-divider"><span>⭐</span></div>
 </div>
 
-<!-- ===== HAMBURGUESAS ===== -->
-<div class="section-title red">🍔 HAMBURGUESAS</div>
-<div class="menu" id="hamburguesasMenu"></div>
+<!-- MENÚ DINÁMICO -->
+<div id="menuContainer"></div>
 
-<!-- ===== FOOTER EXTRA ===== -->
-<div class="footer-block" style="max-width:700px; margin: 20px auto;">
-  <p>🧀 ADICIONAL QUESO FUNDIDO</p>
-  <span class="extra-price" id="extraPrice">$8.800</span>
+<!-- Secret Combo -->
+<div class="mario-bottom">
+  <div class="secret-combo" id="secretCombo">
+    <div class="combo-item" data-combo="left">🍄</div>
+    <div class="combo-item" data-combo="right">🍄</div>
+    <div class="combo-item" data-combo="right">🍄</div>
+    <div class="combo-item" data-combo="right">🍄</div>
+    <div class="combo-item" data-combo="star">⭐</div>
+    <div class="combo-item" data-combo="left">🍄</div>
+    <div class="combo-item" data-combo="star">⭐</div>
+  </div>
+  <div style="font-size:48px;">🍄 ⭐ 🍄</div>
+  <p>© MARIO BURGERS · COMIDA Y DIVERSIÓN</p>
 </div>
 
 <!-- Pixel Ground -->
 <div class="pixel-ground"></div>
 
-<!-- Mario Bottom -->
-<div class="mario-bottom">
-  <div style="font-size:48px;">🍄 ⭐ 🍄</div>
-  <p>© MARIO BURGERS · COMIDA Y DIVERSIÓN</p>
-</div>
-
-<!-- Modal Lightbox -->
+<!-- Modal -->
 <div class="modal" id="imageModal">
   <div class="modal-content">
-    <img class="modal-image" id="modalImage" src="" alt="Imagen ampliada">
+    <img class="modal-image" id="modalImage" src="" alt="">
     <div class="modal-close" onclick="closeModal()">&times;</div>
   </div>
 </div>
 
-<!-- Toast notification -->
+<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <!-- Admin Panel -->
 <div class="admin-panel" id="adminPanel">
   <div class="admin-header">
     <h3>⚙️ ADMIN</h3>
-    <button class="close-admin" onclick="toggleAdmin()">✕</button>
+    <button class="close-admin" onclick="closeAdmin()">✕</button>
   </div>
   <div class="admin-content">
-    <div class="loading" id="adminLoading">Cargando...</div>
-    <div id="adminBody" style="display:none;">
+    <div id="adminBody">
       
-      <!-- Editar productos -->
+      <!-- Gestionar Categorías -->
       <div class="admin-section">
-        <h4>📝 Editar Productos</h4>
+        <h4>📂 CATEGORÍAS</h4>
+        <div id="categoriesList"></div>
+        <div class="form-group">
+          <label>Nueva Categoría</label>
+          <input type="text" id="newCatName" placeholder="Ej: Bebidas">
+        </div>
+        <div class="form-group">
+          <label>Color</label>
+          <select id="newCatColor">
+            <option value="red">🔴 Rojo</option>
+            <option value="green">🟢 Verde</option>
+            <option value="blue">🔵 Azul</option>
+            <option value="purple">🟣 Púrpura</option>
+          </select>
+        </div>
+        <button class="btn-admin" onclick="addCategory()">+ Categoría</button>
+      </div>
+
+      <!-- Editar Productos -->
+      <div class="admin-section">
+        <h4>📝 EDITAR PRODUCTOS</h4>
         <div id="productsList"></div>
       </div>
 
-      <!-- Agregar producto -->
+      <!-- Nuevo Producto -->
       <div class="admin-section">
-        <h4>➕ Nuevo Producto</h4>
+        <h4>➕ NUEVO PRODUCTO</h4>
+        <div class="form-group">
+          <label>Categoría</label>
+          <select id="newCatSelect"></select>
+        </div>
         <div class="form-group">
           <label>Nombre</label>
           <input type="text" id="newName" placeholder="Ej: Super Mario XXL">
         </div>
         <div class="form-group">
           <label>Descripción</label>
-          <textarea id="newDesc" placeholder="Ingredientes y detalles" rows="3"></textarea>
+          <textarea id="newDesc" placeholder="Ingredientes" rows="2"></textarea>
         </div>
         <div class="form-group">
-          <label>Precio</label>
+          <label>Precio Base</label>
           <input type="number" id="newPrice" placeholder="25000" min="0">
         </div>
         <div class="form-group">
           <label>Emoji/Ícono</label>
+          <div class="emoji-picker" id="emojiPicker"></div>
           <input type="text" id="newIcon" placeholder="🍔" maxlength="2">
         </div>
         <div class="form-group">
-          <label>Imagen (foto del producto)</label>
+          <label>Imagen</label>
           <input type="file" id="newImage" accept="image/*">
         </div>
-        <button class="btn-admin" onclick="addNewProduct()">Agregar Producto</button>
-      </div>
 
-      <!-- Configuración -->
-      <div class="admin-section">
-        <h4>⚙️ Configuración</h4>
+        <!-- Combos -->
         <div class="form-group">
-          <label>Precio Extra Queso</label>
-          <input type="number" id="extraPriceInput" placeholder="8800" min="0">
-          <button class="btn-admin" onclick="updateExtraPrice()" style="margin-top:8px;">Guardar</button>
+          <label>¿Tiene Combo? (Precio adicional)</label>
+          <input type="number" id="comboPrice" placeholder="9800" min="0">
+          <input type="text" id="comboDesc" placeholder="Ej: +Papas +Gaseosa" style="margin-top:6px;">
         </div>
+
+        <!-- Añadidos -->
+        <div class="form-group">
+          <label>Añadidos Disponibles (nombre:precio)</label>
+          <textarea id="extrasList" placeholder="Queso extra:5000&#10;Bacon:3000" rows="2"></textarea>
+        </div>
+
+        <button class="btn-admin" onclick="addNewProduct()">✓ Agregar Producto</button>
       </div>
 
     </div>
   </div>
 </div>
 
-<!-- Admin Toggle Button -->
-<div class="admin-toggle" onclick="toggleAdmin()" title="⚙️ ADMIN">⚙️</div>
-
 <script>
-  // Firebase Config
   const firebaseConfig = {
     apiKey: "AIzaSyDyvw3X7lospoKwfABiVI2AUBBJ1Aj9FJM",
     authDomain: "mario-burgers.firebaseapp.com",
@@ -906,203 +769,291 @@
     databaseURL: "https://mario-burgers-default-rtdb.firebaseio.com"
   };
 
-  // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
   let coins = 0;
   let menuData = null;
-  let adminPassword = "1234"; // Contraseña admin
+  let comboSequence = [];
+  const correctSequence = ['left', 'right', 'right', 'right', 'star', 'left', 'star'];
+  const adminPwd = atob('c3VwZXJtYXJpbzIwMjZfMTk4Mw=='); // Contraseña codificada
 
-  // Load menu from Firebase
+  const emojis = ['🍔', '🌭', '🍕', '🍗', '🌶️', '🧀', '🥬', '🍟', '🧅', '🥟', '🍖', '🌮', '🍍', '🥦', '🍵', '⭐'];
+
+  // Setup emoji picker
+  function setupEmojiPicker() {
+    const picker = document.getElementById('emojiPicker');
+    picker.innerHTML = '';
+    emojis.forEach(emoji => {
+      const btn = document.createElement('button');
+      btn.className = 'emoji-btn';
+      btn.textContent = emoji;
+      btn.type = 'button';
+      btn.onclick = () => {
+        document.getElementById('newIcon').value = emoji;
+        document.querySelectorAll('.emoji-btn').forEach(b => b.style.borderColor = '#ffd700');
+        btn.style.borderColor = '#2db83d';
+      };
+      picker.appendChild(btn);
+    });
+  }
+
+  // Secret combo detection
+  document.getElementById('secretCombo').addEventListener('click', (e) => {
+    const item = e.target.closest('.combo-item');
+    if (!item) return;
+
+    const comboType = item.getAttribute('data-combo');
+    comboSequence.push(comboType);
+    item.classList.add('active');
+    setTimeout(() => item.classList.remove('active'), 300);
+
+    if (comboSequence.length > correctSequence.length) {
+      comboSequence.shift();
+    }
+
+    if (comboSequence.join(',') === correctSequence.join(',')) {
+      openAdmin();
+      comboSequence = [];
+    }
+  });
+
+  function openAdmin() {
+    const pwd = prompt('🔐 Contraseña Admin:');
+    if (pwd === adminPwd) {
+      document.getElementById('adminPanel').classList.add('open');
+      setupEmojiPicker();
+      updateAdminPanel();
+    } else if (pwd !== null) {
+      alert('❌ Contraseña incorrecta');
+    }
+  }
+
+  function closeAdmin() {
+    document.getElementById('adminPanel').classList.remove('open');
+  }
+
   function loadMenu() {
     db.ref('menu').once('value', (snapshot) => {
       menuData = snapshot.val();
       if (!menuData) {
-        // Initialize default data
         initializeDefaultData();
       } else {
         renderMenu();
-        updateAdminPanel();
       }
     });
   }
 
   function initializeDefaultData() {
     menuData = {
-      hamburguesas: {
-        0: {
-          nombre: "Super Mario Galaxy",
-          descripcion: "Hamburguesa 100% carne de 145gr, huevo frito, jamón, queso cheddar, ½ chorizo en tiras, papas chip, tocineta, pepinillos y vegetales — lechuga, tomate, cebolla caramelizada — con salsas.",
-          precio: 24800,
-          icon: "🌌",
-          imagen: "https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp"
-        },
-        1: {
-          nombre: "Super Mario Chiken",
-          descripcion: "Hamburguesa de pollo apanado 145gr, pepinillos, jamón, tocineta, papas chip, queso cheddar, huevos de codorniz, vegetales y salsas.",
-          precio: 20900,
-          icon: "🍗",
-          imagen: "https://static.wixstatic.com/media/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85,usm_0.66_1.00_0.01/29cc8e_aaad1f9b690b4176a0cef213b971f787~mv2.jpg"
-        }
+      categories: {
+        hamburguesas: { nombre: 'HAMBURGUESAS', icon: '🍔', color: 'red' },
+        entradas: { nombre: 'ENTRADAS', icon: '🍄', color: 'green' },
+        bebidas: { nombre: 'BEBIDAS', icon: '🥤', color: 'blue' }
       },
-      extraPrice: 8800
+      products: {
+        h1: {
+          categoria: 'hamburguesas',
+          nombre: 'Super Mario Galaxy',
+          descripcion: 'Carne 145gr, huevo frito, jamón, queso, chorizo, papas, tocineta',
+          precio: 24800,
+          icon: '🌌',
+          imagen: 'https://tofuu.getjusto.com/orioneat-local/resized2/svdQXZDN6DyQhvcDw-2048-x.webp',
+          combo: { precio: 9800, desc: '+Papas +Gaseosa' },
+          extras: { 'Queso extra': 5000 }
+        }
+      }
     };
     
     db.ref('menu').set(menuData, () => {
       renderMenu();
-      updateAdminPanel();
     });
   }
 
   function renderMenu() {
-    if (!menuData || !menuData.hamburguesas) return;
-    
-    const container = document.getElementById('hamburguesasMenu');
-    container.innerHTML = '';
-    
-    Object.entries(menuData.hamburguesas).forEach((entry, idx) => {
-      const [key, burger] = entry;
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.onclick = () => collectCoin();
-      
-      const imageSrc = burger.imagen || 'https://via.placeholder.com/300?text=' + burger.icon;
-      
-      // Crear el elemento sin innerHTML para evitar problemas de escapado
-      const imageContainer = document.createElement('div');
-      imageContainer.className = 'card-image-container';
-      imageContainer.style.cursor = 'pointer';
-      imageContainer.onclick = (e) => openModal(e, imageSrc);
-      
-      const img = document.createElement('img');
-      img.src = imageSrc;
-      img.alt = burger.nombre;
-      img.className = 'card-image';
-      img.onerror = function() {
-        this.parentElement.innerHTML = `<div class="card-image-placeholder">${burger.icon}</div>`;
-      };
-      
-      imageContainer.appendChild(img);
-      
-      const header = document.createElement('div');
-      header.className = 'card-header';
-      header.innerHTML = `
-        <div class="card-icon">${burger.icon}</div>
-        <h2>${burger.nombre}</h2>
-      `;
-      
-      const body = document.createElement('div');
-      body.className = 'card-body';
-      body.innerHTML = `
-        <p>${burger.descripcion}</p>
-        <div class="price-row">
-          <div class="price">$${burger.precio.toLocaleString()}</div>
-        </div>
-      `;
-      
-      card.appendChild(imageContainer);
-      card.appendChild(header);
-      card.appendChild(body);
-      container.appendChild(card);
-    });
+    if (!menuData) return;
 
-    document.getElementById('extraPrice').textContent = '$' + (menuData.extraPrice || 8800).toLocaleString();
+    const container = document.getElementById('menuContainer');
+    container.innerHTML = '';
+
+    Object.entries(menuData.categories || {}).forEach(([catKey, cat]) => {
+      const products = Object.entries(menuData.products || {})
+        .filter(([_, p]) => p.categoria === catKey);
+
+      if (products.length === 0) return;
+
+      const title = document.createElement('div');
+      title.className = `section-title ${cat.color}`;
+      title.innerHTML = `${cat.icon} ${cat.nombre}`;
+      container.appendChild(title);
+
+      const menu = document.createElement('div');
+      menu.className = 'menu';
+
+      products.forEach(([pKey, product]) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.animationDelay = `${products.indexOf([pKey, product]) * 0.1}s`;
+
+        const img = document.createElement('img');
+        img.src = product.imagen || 'https://via.placeholder.com/300';
+        img.alt = product.nombre;
+        img.className = 'card-image';
+        img.style.cursor = 'pointer';
+        img.onclick = (e) => {
+          e.stopPropagation();
+          openModal(product.imagen);
+        };
+
+        const imgContainer = document.createElement('div');
+        imgContainer.className = 'card-image-container';
+        imgContainer.appendChild(img);
+
+        const header = document.createElement('div');
+        header.className = `card-header ${cat.color}`;
+        header.innerHTML = `<div class="card-icon">${product.icon}</div><h2>${product.nombre}</h2>`;
+
+        const body = document.createElement('div');
+        body.className = 'card-body';
+
+        let html = `<p>${product.descripcion}</p>`;
+        html += `<div class="price-row"><div class="price">$${product.precio.toLocaleString()}</div>`;
+
+        if (product.combo && product.combo.precio) {
+          html += `<button style="font-family:'Fredoka One',cursive;padding:10px 16px;border:none;background:linear-gradient(135deg,#2db83d,#1a9a28);color:white;font-weight:700;border-radius:12px;border:3px solid #ffd700;cursor:pointer;">🍟 Combo +$${product.combo.precio}</button>`;
+        }
+        html += `</div>`;
+
+        if (product.extras && Object.keys(product.extras).length > 0) {
+          html += `<div class="extras-section"><strong style="color:#e52222;">Añadidos:</strong>`;
+          Object.entries(product.extras).forEach(([name, price]) => {
+            html += `<div class="extra-item"><span>${name}</span> <span>+$${price}</span></div>`;
+          });
+          html += `</div>`;
+        }
+
+        body.innerHTML = html;
+
+        card.appendChild(imgContainer);
+        card.appendChild(header);
+        card.appendChild(body);
+        card.onclick = () => collectCoin();
+
+        menu.appendChild(card);
+      });
+
+      container.appendChild(menu);
+    });
   }
 
   function updateAdminPanel() {
-    const list = document.getElementById('productsList');
-    list.innerHTML = '';
+    const catSelect = document.getElementById('newCatSelect');
+    const prodList = document.getElementById('productsList');
+    const catList = document.getElementById('categoriesList');
 
-    if (menuData && menuData.hamburguesas) {
-      Object.entries(menuData.hamburguesas).forEach((entry) => {
-        const [key, burger] = entry;
-        const item = document.createElement('div');
-        item.className = 'product-item';
-        item.innerHTML = `
-          <h5>${burger.icon} ${burger.nombre}</h5>
-          <p>Precio: $${burger.precio}</p>
-          <button class="btn-small" onclick="editProduct('${key}')">✎ Editar</button>
-          <button class="btn-small btn-danger" onclick="deleteProduct('${key}')">✕ Borrar</button>
-        `;
-        list.appendChild(item);
-      });
-    }
+    catSelect.innerHTML = '';
+    prodList.innerHTML = '';
+    catList.innerHTML = '';
 
-    document.getElementById('extraPriceInput').value = menuData?.extraPrice || 8800;
-    document.getElementById('adminLoading').style.display = 'none';
-    document.getElementById('adminBody').style.display = 'block';
+    Object.entries(menuData.categories || {}).forEach(([key, cat]) => {
+      const opt = document.createElement('option');
+      opt.value = key;
+      opt.textContent = cat.nombre;
+      catSelect.appendChild(opt);
+
+      const btn = document.createElement('button');
+      btn.className = 'btn-small';
+      btn.textContent = `✕ ${cat.nombre}`;
+      btn.style.background = '#e52222';
+      btn.onclick = () => {
+        if (confirm(`¿Eliminar categoría ${cat.nombre}?`)) {
+          delete menuData.categories[key];
+          db.ref('menu/categories/' + key).remove(() => {
+            renderMenu();
+            updateAdminPanel();
+            showToast('Categoría eliminada');
+          });
+        }
+      };
+      catList.appendChild(btn);
+    });
+
+    Object.entries(menuData.products || {}).forEach(([key, product]) => {
+      const item = document.createElement('div');
+      item.className = 'product-item';
+      item.innerHTML = `
+        <h5>${product.icon} ${product.nombre}</h5>
+        <p>Categoría: ${product.categoria} | Precio: $${product.precio}</p>
+        <button class="btn-small" onclick="editProduct('${key}')">✎ Editar</button>
+        <button class="btn-small" style="background:#e52222;" onclick="deleteProduct('${key}')">✕ Eliminar</button>
+      `;
+      prodList.appendChild(item);
+    });
   }
 
-  function toggleAdmin() {
-    const panel = document.getElementById('adminPanel');
-    if (!panel.classList.contains('open')) {
-      const pwd = prompt('🔐 Contraseña Admin:');
-      if (pwd === adminPassword) {
-        panel.classList.add('open');
-      } else if (pwd !== null) {
-        alert('❌ Contraseña incorrecta');
-      }
-    } else {
-      panel.classList.remove('open');
-    }
-  }
+  function addCategory() {
+    const name = document.getElementById('newCatName').value;
+    const color = document.getElementById('newCatColor').value;
+    if (!name) return alert('Nombre requerido');
 
-  function editProduct(key) {
-    const burger = menuData.hamburguesas[key];
-    const newPrice = prompt('Nuevo precio:', burger.precio);
-    if (newPrice) {
-      menuData.hamburguesas[key].precio = parseInt(newPrice);
-      db.ref('menu/hamburguesas/' + key + '/precio').set(parseInt(newPrice), () => {
-        renderMenu();
-        updateAdminPanel();
-        showToast('✅ Precio actualizado');
-      });
-    }
-  }
+    const key = name.toLowerCase().replace(/\s/g, '');
+    menuData.categories = menuData.categories || {};
+    menuData.categories[key] = { nombre: name.toUpperCase(), icon: '📂', color };
 
-  function deleteProduct(key) {
-    if (confirm('¿Eliminar este producto?')) {
-      delete menuData.hamburguesas[key];
-      db.ref('menu/hamburguesas/' + key).remove(() => {
-        renderMenu();
-        updateAdminPanel();
-        showToast('🗑️ Producto eliminado');
-      });
-    }
+    db.ref('menu/categories/' + key).set(menuData.categories[key], () => {
+      document.getElementById('newCatName').value = '';
+      renderMenu();
+      updateAdminPanel();
+      showToast('✅ Categoría creada');
+    });
   }
 
   function addNewProduct() {
+    const cat = document.getElementById('newCatSelect').value;
     const name = document.getElementById('newName').value;
     const desc = document.getElementById('newDesc').value;
     const price = document.getElementById('newPrice').value;
     const icon = document.getElementById('newIcon').value || '🍔';
     const imageFile = document.getElementById('newImage').files[0];
+    const comboP = document.getElementById('comboPrice').value;
+    const comboD = document.getElementById('comboDesc').value;
+    const extrasList = document.getElementById('extrasList').value;
 
-    if (!name || !desc || !price) {
-      alert('Completa todos los campos');
-      return;
-    }
+    if (!cat || !name || !desc || !price) return alert('Completa los campos obligatorios');
 
     const processProduct = (imageUrl) => {
-      const newKey = Date.now().toString();
-      const newProduct = {
+      const key = 'p' + Date.now();
+      const extras = {};
+      if (extrasList.trim()) {
+        extrasList.split('\n').forEach(line => {
+          const [n, p] = line.split(':');
+          if (n && p) extras[n.trim()] = parseInt(p);
+        });
+      }
+
+      const product = {
+        categoria: cat,
         nombre: name,
         descripcion: desc,
         precio: parseInt(price),
         icon: icon,
-        imagen: imageUrl || 'https://via.placeholder.com/300'
+        imagen: imageUrl || 'https://via.placeholder.com/300',
+        combo: comboP ? { precio: parseInt(comboP), desc: comboD } : null,
+        extras: Object.keys(extras).length > 0 ? extras : null
       };
 
-      if (!menuData.hamburguesas) menuData.hamburguesas = {};
-      menuData.hamburguesas[newKey] = newProduct;
+      menuData.products = menuData.products || {};
+      menuData.products[key] = product;
 
-      db.ref('menu/hamburguesas/' + newKey).set(newProduct, () => {
+      db.ref('menu/products/' + key).set(product, () => {
         document.getElementById('newName').value = '';
         document.getElementById('newDesc').value = '';
         document.getElementById('newPrice').value = '';
         document.getElementById('newIcon').value = '';
         document.getElementById('newImage').value = '';
+        document.getElementById('comboPrice').value = '';
+        document.getElementById('comboDesc').value = '';
+        document.getElementById('extrasList').value = '';
         renderMenu();
         updateAdminPanel();
         showToast('✅ Producto agregado');
@@ -1111,21 +1062,32 @@
 
     if (imageFile) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        processProduct(e.target.result);
-      };
+      reader.onload = (e) => processProduct(e.target.result);
       reader.readAsDataURL(imageFile);
     } else {
       processProduct(null);
     }
   }
 
-  function updateExtraPrice() {
-    const price = document.getElementById('extraPriceInput').value;
-    if (price) {
-      menuData.extraPrice = parseInt(price);
-      db.ref('menu/extraPrice').set(parseInt(price), () => {
+  function deleteProduct(key) {
+    if (confirm('¿Eliminar producto?')) {
+      delete menuData.products[key];
+      db.ref('menu/products/' + key).remove(() => {
         renderMenu();
+        updateAdminPanel();
+        showToast('🗑️ Producto eliminado');
+      });
+    }
+  }
+
+  function editProduct(key) {
+    const product = menuData.products[key];
+    const newPrice = prompt('Nuevo precio:', product.precio);
+    if (newPrice) {
+      menuData.products[key].precio = parseInt(newPrice);
+      db.ref('menu/products/' + key + '/precio').set(parseInt(newPrice), () => {
+        renderMenu();
+        updateAdminPanel();
         showToast('✅ Precio actualizado');
       });
     }
@@ -1134,22 +1096,15 @@
   function collectCoin() {
     coins++;
     document.getElementById('coinCount').textContent = String(coins).padStart(3, '0');
-    const el = event.currentTarget;
-    el.style.transform = 'scale(0.97)';
-    setTimeout(() => { el.style.transform = ''; }, 150);
   }
 
-  function openModal(e, imageSrc) {
-    e.stopPropagation();
-    const modal = document.getElementById('imageModal');
-    const modalImage = document.getElementById('modalImage');
-    modalImage.src = imageSrc;
-    modal.classList.add('show');
+  function openModal(src) {
+    document.getElementById('modalImage').src = src;
+    document.getElementById('imageModal').classList.add('show');
   }
 
   function closeModal() {
-    const modal = document.getElementById('imageModal');
-    modal.classList.remove('show');
+    document.getElementById('imageModal').classList.remove('show');
   }
 
   function showToast(msg) {
@@ -1159,26 +1114,16 @@
     setTimeout(() => toast.classList.remove('show'), 3000);
   }
 
-  // Event listeners
-  document.getElementById('imageModal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
+  document.getElementById('imageModal').addEventListener('click', (e) => {
+    if (e.target.id === 'imageModal') closeModal();
   });
 
-  document.addEventListener('keydown', function(e) {
+  document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
   });
 
-  // Initialize on load
   loadMenu();
-
-  // Listen to real-time updates
   db.ref('menu').on('value', (snapshot) => {
     menuData = snapshot.val();
-    if (menuData) {
-      renderMenu();
-    }
+    if (menuData) renderMenu();
   });
-</script>
-
-</body>
-</html>
