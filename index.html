@@ -969,22 +969,41 @@
       
       const imageSrc = burger.imagen || 'https://via.placeholder.com/300?text=' + burger.icon;
       
-      card.innerHTML = `
-        <div class="card-image-container" onclick="openModal(event, '${imageSrc}')">
-          <img src="${imageSrc}" alt="${burger.nombre}" class="card-image" 
-            onerror="this.parentElement.innerHTML='<div class=\"card-image-placeholder\">${burger.icon}</div>'">
-        </div>
-        <div class="card-header">
-          <div class="card-icon">${burger.icon}</div>
-          <h2>${burger.nombre}</h2>
-        </div>
-        <div class="card-body">
-          <p>${burger.descripcion}</p>
-          <div class="price-row">
-            <div class="price">$${burger.precio.toLocaleString()}</div>
-          </div>
+      // Crear el elemento sin innerHTML para evitar problemas de escapado
+      const imageContainer = document.createElement('div');
+      imageContainer.className = 'card-image-container';
+      imageContainer.style.cursor = 'pointer';
+      imageContainer.onclick = (e) => openModal(e, imageSrc);
+      
+      const img = document.createElement('img');
+      img.src = imageSrc;
+      img.alt = burger.nombre;
+      img.className = 'card-image';
+      img.onerror = function() {
+        this.parentElement.innerHTML = `<div class="card-image-placeholder">${burger.icon}</div>`;
+      };
+      
+      imageContainer.appendChild(img);
+      
+      const header = document.createElement('div');
+      header.className = 'card-header';
+      header.innerHTML = `
+        <div class="card-icon">${burger.icon}</div>
+        <h2>${burger.nombre}</h2>
+      `;
+      
+      const body = document.createElement('div');
+      body.className = 'card-body';
+      body.innerHTML = `
+        <p>${burger.descripcion}</p>
+        <div class="price-row">
+          <div class="price">$${burger.precio.toLocaleString()}</div>
         </div>
       `;
+      
+      card.appendChild(imageContainer);
+      card.appendChild(header);
+      card.appendChild(body);
       container.appendChild(card);
     });
 
